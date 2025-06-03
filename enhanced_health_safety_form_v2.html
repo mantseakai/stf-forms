@@ -1,0 +1,1726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extended Health and Safety Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 15px;
+            background-color: #f8f9fa;
+            line-height: 1.4;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            margin: 0 0 10px 0;
+            font-size: 1.5em;
+        }
+        
+        .header h2 {
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
+            font-weight: normal;
+        }
+        
+        .section {
+            background-color: white;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .section-header {
+            background-color: #dc3545;
+            color: white;
+            padding: 12px 20px;
+            font-weight: bold;
+            font-size: 1.1em;
+            cursor: pointer;
+        }
+        
+        .section-content {
+            padding: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .form-col {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+            font-size: 0.9em;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            border-color: #dc3545;
+            outline: none;
+            box-shadow: 0 0 5px rgba(220, 53, 69, 0.3);
+        }
+        
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin-right: 8px;
+        }
+        
+        .checkbox-item label {
+            margin: 0;
+            font-weight: normal;
+            font-size: 0.9em;
+        }
+        
+        .status-bar {
+            background-color: #ffe6e6;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            border: 1px solid #dc3545;
+        }
+        
+        .location-section {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .btn {
+            background-color: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .btn:hover {
+            background-color: #c82333;
+        }
+        
+        .btn-secondary { background-color: #6c757d; }
+        .btn-success { background-color: #28a745; }
+        .btn-danger { background-color: #dc3545; }
+        .btn-info { background-color: #17a2b8; }
+        .btn-warning { background-color: #ffc107; color: #212529; }
+        
+        .actions {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .location-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        
+        .location-input {
+            margin-top: 10px;
+        }
+        
+        .location-status {
+            margin-top: 10px;
+            padding: 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .location-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .location-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .location-warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .district-search {
+            margin-bottom: 5px;
+        }
+        
+        .district-search input {
+            padding: 6px 10px;
+            font-size: 13px;
+        }
+        
+        #quickGuide {
+            font-size: 0.9em;
+        }
+        
+        #quickGuide ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        #quickGuide li {
+            margin-bottom: 5px;
+        }
+        
+        /* Modal styles */
+        #editModal {
+            font-family: Arial, sans-serif;
+        }
+        
+        #editModal .btn {
+            margin: 2px;
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+        
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .form-row { flex-direction: column; }
+            .checkbox-grid { grid-template-columns: 1fr; }
+            .header h1 { font-size: 1.3em; }
+            .btn { font-size: 12px; padding: 8px 15px; }
+            .location-buttons { flex-direction: column; }
+            #editModal > div {
+                width: 95% !important;
+                max-height: 90% !important;
+                padding: 15px !important;
+            }
+        }
+        
+        .required { color: red; }
+        
+        .safety-icon {
+            font-size: 1.2em;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏛️ MINISTRY OF LABOUR, JOBS AND EMPLOYMENT</h1>
+        <h2>Department of Factories Inspectorate</h2>
+        <p>Extended Health and Safety Form</p>
+        <small>Factories, Offices and Shop Act, 1970 (Act 328) & Labour Act, 2003(Act 651)</small>
+    </div>
+
+    <!-- Instructions Section -->
+    <div class="section">
+        <div class="section-header" onclick="toggleInstructions()" style="cursor: pointer;">
+            📋 Quick Instructions (Click to expand/collapse) <span id="instructionsToggle">▼</span>
+        </div>
+        <div class="section-content" id="instructionsContent">
+            <div style="background: #ffe6e6; padding: 15px; border-radius: 5px; margin-bottom: 15px;">
+                <h4>🔒 Getting Started</h4>
+                <ol style="margin: 10px 0; padding-left: 20px;">
+                    <li><strong>Open in Real Browser:</strong> If opened from WhatsApp, click the red "Open in Real Browser" button below</li>
+                    <li><strong>Set Location:</strong> Use Google Maps method (recommended) or GPS</li>
+                    <li><strong>Fill Required Fields:</strong> Look for red asterisk (*) marks</li>
+                    <li><strong>Complete 10 Sections:</strong> Work through each safety section systematically</li>
+                    <li><strong>Export & Share:</strong> Click "Export to CSV" then share via WhatsApp</li>
+                </ol>
+                
+                <div style="background: #d1ecf1; padding: 10px; border-radius: 5px; margin-top: 10px;">
+                    <strong>✏️ Need to Fix a Mistake?</strong> Use "Edit Saved Form" button to retrieve and modify any previously saved safety inspection.
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-col">
+                    <h5>📍 Location Methods:</h5>
+                    <ul style="font-size: 0.9em; margin: 5px 0;">
+                        <li><strong>Google Maps:</strong> Long-press location → copy coordinates</li>
+                        <li><strong>GPS:</strong> Click "Try GPS" (works in real browser)</li>
+                        <li><strong>Manual:</strong> Enter landmark description</li>
+                    </ul>
+                </div>
+                <div class="form-col">
+                    <h5>⏱️ Time Estimates:</h5>
+                    <ul style="font-size: 0.9em; margin: 5px 0;">
+                        <li><strong>Simple inspection:</strong> 15-20 minutes</li>
+                        <li><strong>Complex inspection:</strong> 30-45 minutes</li>
+                        <li><strong>First-time user:</strong> Add 10 minutes</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div style="background: #fff3cd; padding: 10px; border-radius: 5px; margin-top: 10px;">
+                <strong>💡 Quick Tips:</strong> Form auto-saves every 3 seconds • Use district search box • Check all applicable boxes • Add detailed comments
+            </div>
+            
+            <div style="background: #f8d7da; padding: 10px; border-radius: 5px; margin-top: 10px;">
+                <strong>🔧 Troubleshooting:</strong>
+                <span style="font-size: 0.9em;">
+                GPS not working? → Click "Open in Real Browser" • 
+                Can't find district? → Use search box above dropdown • 
+                Form won't save? → Check required fields (*) • 
+                Made a mistake? → Use "Edit Saved Form" button • 
+                Need help? → Contact supervisor
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="status-bar">
+        <strong>🔒 Safety Status:</strong> <span id="formStatus">Ready for new inspection</span><br>
+        <strong>💾 Last Saved:</strong> <span id="lastSaved">Never</span><br>
+        <strong>📱 Form ID:</strong> <span id="formId">SAFETY_</span><br>
+        <strong>📋 Progress:</strong> Complete all 10 sections below
+    </div>
+
+    <!-- Enhanced Location Section -->
+    <div class="location-section">
+        <h4>📍 Location Information</h4>
+        
+        <!-- WhatsApp Browser Warning -->
+        <div id="whatsappWarning" class="location-status location-error" style="display: none;">
+            ⚠️ GPS doesn't work in WhatsApp browser. Click "Open in Browser" button below!
+        </div>
+        
+        <div class="location-buttons">
+            <button type="button" class="btn btn-danger" onclick="openInRealBrowser()" id="openBrowserBtn">🌐 Open in Real Browser</button>
+            <button type="button" class="btn btn-warning" onclick="getGPSLocation()">📡 Try GPS</button>
+            <button type="button" class="btn btn-info" onclick="openGoogleMaps()">🗺️ Get from Google Maps</button>
+            <button type="button" class="btn btn-success" onclick="showQuickGuide()">📋 Quick Guide</button>
+        </div>
+        
+        <div id="locationStatus" class="location-status location-warning">
+            📍 Choose a method to get location coordinates
+        </div>
+        
+        <!-- Quick Guide Section -->
+        <div id="quickGuide" class="location-input" style="display: none; background: #ffe6e6; padding: 15px; border-radius: 5px; margin: 10px 0;">
+            <h5>🚀 Quick Steps to Get Coordinates:</h5>
+            <ol style="margin: 10px 0; padding-left: 20px;">
+                <li><strong>Open Google Maps</strong> on your phone</li>
+                <li><strong>Find the company location</strong> (search or use current location)</li>
+                <li><strong>Long press</strong> on the exact spot</li>
+                <li><strong>Copy the coordinates</strong> (e.g., 5.6037, -0.1870)</li>
+                <li><strong>Paste below</strong> in the coordinates field</li>
+            </ol>
+        </div>
+        
+        <!-- Manual Entry (Always Visible) -->
+        <div class="location-input">
+            <label for="manualCoordinates">📍 Coordinates (Latitude, Longitude):</label>
+            <input type="text" id="manualCoordinates" placeholder="Paste coordinates here: 5.6037, -0.1870" onchange="updateLocationDisplay()">
+            <small style="color: #666;">Get from Google Maps by long-pressing on location</small>
+        </div>
+        
+        <div class="location-input">
+            <label for="locationDescription">🏢 Landmark/Description:</label>
+            <input type="text" id="locationDescription" placeholder="e.g., Near Kotoka Airport, Behind Total Filling Station, Opposite GCB Bank">
+        </div>
+    </div>
+
+    <form id="healthSafetyForm">
+        <!-- Section 1: Company Information -->
+        <div class="section">
+            <div class="section-header">🏢 Section 1: Company Information</div>
+            <div class="section-content">
+                <div class="form-group">
+                    <label for="companyName">Company Name <span class="required">*</span></label>
+                    <input type="text" id="companyName" name="companyName" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="companyTIN">Company Tax Identification Number <span class="required">*</span></label>
+                            <input type="text" id="companyTIN" name="companyTIN" required>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="district">District <span class="required">*</span></label>
+                            <div class="district-search">
+                                <input type="text" id="districtSearch" placeholder="Search for district..." onkeyup="filterDistricts()">
+                            </div>
+                            <select id="district" name="district" required>
+                                <option value="">-- Select District --</option>
+                                <option value="Abetifi">Abetifi</option>
+                                <option value="Abokobi-Madina">Abokobi-Madina</option>
+                                <option value="Abura Asebu Kwamankese">Abura Asebu Kwamankese</option>
+                                <option value="Accra Metropolitan">Accra Metropolitan</option>
+                                <option value="Ada East">Ada East</option>
+                                <option value="Ada West">Ada West</option>
+                                <option value="Adaklu">Adaklu</option>
+                                <option value="Adansi North">Adansi North</option>
+                                <option value="Adansi South">Adansi South</option>
+                                <option value="Adentan Municipal">Adentan Municipal</option>
+                                <option value="Adeiso">Adeiso</option>
+                                <option value="Afadjato South">Afadjato South</option>
+                                <option value="Afigya Kwabre North">Afigya Kwabre North</option>
+                                <option value="Afigya Kwabre South">Afigya Kwabre South</option>
+                                <option value="Afram Plains North">Afram Plains North</option>
+                                <option value="Afram Plains South">Afram Plains South</option>
+                                <option value="Agogo">Agogo</option>
+                                <option value="Agona East">Agona East</option>
+                                <option value="Agona West Municipal">Agona West Municipal</option>
+                                <option value="Agortime Ziope">Agortime Ziope</option>
+                                <option value="Ahafo Ano North">Ahafo Ano North</option>
+                                <option value="Ahafo Ano South East">Ahafo Ano South East</option>
+                                <option value="Ahafo Ano South West">Ahafo Ano South West</option>
+                                <option value="Ahanta West">Ahanta West</option>
+                                <option value="Ajumako Enyan Esiam">Ajumako Enyan Esiam</option>
+                                <option value="Akatsi North">Akatsi North</option>
+                                <option value="Akatsi South">Akatsi South</option>
+                                <option value="Akontombra">Akontombra</option>
+                                <option value="Akrofuom">Akrofuom</option>
+                                <option value="Akuapem North">Akuapem North</option>
+                                <option value="Akuapem South">Akuapem South</option>
+                                <option value="Akyemansa">Akyemansa</option>
+                                <option value="Amansie Central">Amansie Central</option>
+                                <option value="Amansie South">Amansie South</option>
+                                <option value="Amansie West">Amansie West</option>
+                                <option value="Amenfi Central">Amenfi Central</option>
+                                <option value="Amenfi East">Amenfi East</option>
+                                <option value="Amenfi West">Amenfi West</option>
+                                <option value="Anloga">Anloga</option>
+                                <option value="Aowin">Aowin</option>
+                                <option value="Asunafo North">Asunafo North</option>
+                                <option value="Asunafo South">Asunafo South</option>
+                                <option value="Asante Akim Central">Asante Akim Central</option>
+                                <option value="Asante Akim North">Asante Akim North</option>
+                                <option value="Asante Akim South">Asante Akim South</option>
+                                <option value="Ashaiman Municipal">Ashaiman Municipal</option>
+                                <option value="Ashanti Mampong Municipal">Ashanti Mampong Municipal</option>
+                                <option value="Assin Central">Assin Central</option>
+                                <option value="Assin North">Assin North</option>
+                                <option value="Assin South">Assin South</option>
+                                <option value="Assin Fosu">Assin Fosu</option>
+                                <option value="Asuogyaman">Asuogyaman</option>
+                                <option value="Atebubu Amantin">Atebubu Amantin</option>
+                                <option value="Awutu Senya East">Awutu Senya East</option>
+                                <option value="Awutu Senya West">Awutu Senya West</option>
+                                <option value="Ayensuano">Ayensuano</option>
+                                <option value="Banda">Banda</option>
+                                <option value="Barima Waini">Barima Waini</option>
+                                <option value="Berekum East">Berekum East</option>
+                                <option value="Berekum West">Berekum West</option>
+                                <option value="Bibiani Anhwiaso Bekwai">Bibiani Anhwiaso Bekwai</option>
+                                <option value="Biakoye">Biakoye</option>
+                                <option value="Birim Central">Birim Central</option>
+                                <option value="Birim North">Birim North</option>
+                                <option value="Birim South">Birim South</option>
+                                <option value="Bosome Freho">Bosome Freho</option>
+                                <option value="Bosomtwe">Bosomtwe</option>
+                                <option value="Bodi">Bodi</option>
+                                <option value="Bolgatanga East">Bolgatanga East</option>
+                                <option value="Bolgatanga Municipal">Bolgatanga Municipal</option>
+                                <option value="Bongo">Bongo</option>
+                                <option value="Builsa North">Builsa North</option>
+                                <option value="Builsa South">Builsa South</option>
+                                <option value="Bunkpurugu Nakpanduri">Bunkpurugu Nakpanduri</option>
+                                <option value="Cape Coast Metropolitan">Cape Coast Metropolitan</option>
+                                <option value="Central Gonja">Central Gonja</option>
+                                <option value="Central Tongu">Central Tongu</option>
+                                <option value="Chereponi">Chereponi</option>
+                                <option value="Dormaa Central">Dormaa Central</option>
+                                <option value="Dormaa East">Dormaa East</option>
+                                <option value="Dormaa West">Dormaa West</option>
+                                <option value="East Gonja">East Gonja</option>
+                                <option value="East Mamprusi">East Mamprusi</option>
+                                <option value="Effutu Municipal">Effutu Municipal</option>
+                                <option value="Ejiso">Ejiso</option>
+                                <option value="Ejura Sekyedumase">Ejura Sekyedumase</option>
+                                <option value="Ekwusigo">Ekwusigo</option>
+                                <option value="Ellembelle">Ellembelle</option>
+                                <option value="Fanteakwa North">Fanteakwa North</option>
+                                <option value="Fanteakwa South">Fanteakwa South</option>
+                                <option value="Ga Central">Ga Central</option>
+                                <option value="Ga East">Ga East</option>
+                                <option value="Ga North">Ga North</option>
+                                <option value="Ga South">Ga South</option>
+                                <option value="Ga West">Ga West</option>
+                                <option value="Gomoa Central">Gomoa Central</option>
+                                <option value="Gomoa East">Gomoa East</option>
+                                <option value="Gomoa West">Gomoa West</option>
+                                <option value="Guan">Guan</option>
+                                <option value="Gushegu">Gushegu</option>
+                                <option value="Hohoe Municipal">Hohoe Municipal</option>
+                                <option value="Ho Municipal">Ho Municipal</option>
+                                <option value="Ho West">Ho West</option>
+                                <option value="Jasikan">Jasikan</option>
+                                <option value="Jaman North">Jaman North</option>
+                                <option value="Jaman South">Jaman South</option>
+                                <option value="Jirapa">Jirapa</option>
+                                <option value="Juaboso">Juaboso</option>
+                                <option value="Kassena Nankana East">Kassena Nankana East</option>
+                                <option value="Kassena Nankana West">Kassena Nankana West</option>
+                                <option value="Kassena Nankana Municipal">Kassena Nankana Municipal</option>
+                                <option value="Keta Municipal">Keta Municipal</option>
+                                <option value="Ketu North">Ketu North</option>
+                                <option value="Ketu South">Ketu South</option>
+                                <option value="Kintampo North">Kintampo North</option>
+                                <option value="Kintampo South">Kintampo South</option>
+                                <option value="Komenda Edina Eguafo Abrem">Komenda Edina Eguafo Abrem</option>
+                                <option value="Kpandai">Kpandai</option>
+                                <option value="Krachi East">Krachi East</option>
+                                <option value="Krachi Nchumuru">Krachi Nchumuru</option>
+                                <option value="Krachi West">Krachi West</option>
+                                <option value="Kumasi Metropolitan">Kumasi Metropolitan</option>
+                                <option value="Kwabre East">Kwabre East</option>
+                                <option value="Kwadaso">Kwadaso</option>
+                                <option value="Kwaebibirem">Kwaebibirem</option>
+                                <option value="Kwahu Afram Plains North">Kwahu Afram Plains North</option>
+                                <option value="Kwahu Afram Plains South">Kwahu Afram Plains South</option>
+                                <option value="Kwahu East">Kwahu East</option>
+                                <option value="Kwahu South">Kwahu South</option>
+                                <option value="Kwahu West">Kwahu West</option>
+                                <option value="Lambussie Karni">Lambussie Karni</option>
+                                <option value="Lawra">Lawra</option>
+                                <option value="Lower Manya Krobo">Lower Manya Krobo</option>
+                                <option value="Mampong Municipal">Mampong Municipal</option>
+                                <option value="Manhyia North">Manhyia North</option>
+                                <option value="Manhyia South">Manhyia South</option>
+                                <option value="Mfantseman">Mfantseman</option>
+                                <option value="Mion">Mion</option>
+                                <option value="Mpohor">Mpohor</option>
+                                <option value="Nabdam">Nabdam</option>
+                                <option value="Nadowli Kaleo">Nadowli Kaleo</option>
+                                <option value="Nandom">Nandom</option>
+                                <option value="Nanumba North">Nanumba North</option>
+                                <option value="Nanumba South">Nanumba South</option>
+                                <option value="Nkwanta North">Nkwanta North</option>
+                                <option value="Nkwanta South">Nkwanta South</option>
+                                <option value="North Dayi">North Dayi</option>
+                                <option value="North East Gonja">North East Gonja</option>
+                                <option value="North Tongu">North Tongu</option>
+                                <option value="Nkoranza North">Nkoranza North</option>
+                                <option value="Nkoranza South">Nkoranza South</option>
+                                <option value="Nsawam Adoagyiri">Nsawam Adoagyiri</option>
+                                <option value="Nzema East">Nzema East</option>
+                                <option value="Obuasi East">Obuasi East</option>
+                                <option value="Obuasi Municipal">Obuasi Municipal</option>
+                                <option value="Odotobri">Odotobri</option>
+                                <option value="Offinso Municipal">Offinso Municipal</option>
+                                <option value="Offinso North">Offinso North</option>
+                                <option value="Okaikwei North">Okaikwei North</option>
+                                <option value="Okaikwei South">Okaikwei South</option>
+                                <option value="Okere">Okere</option>
+                                <option value="Old Tafo">Old Tafo</option>
+                                <option value="Oforikrom">Oforikrom</option>
+                                <option value="Prestea Huni Valley">Prestea Huni Valley</option>
+                                <option value="Pusiga">Pusiga</option>
+                                <option value="Saboba">Saboba</option>
+                                <option value="Savelugu">Savelugu</option>
+                                <option value="Sawla Tuna Kalba">Sawla Tuna Kalba</option>
+                                <option value="Sekondi Takoradi Metropolitan">Sekondi Takoradi Metropolitan</option>
+                                <option value="Shama">Shama</option>
+                                <option value="Sissala East">Sissala East</option>
+                                <option value="Sissala West">Sissala West</option>
+                                <option value="South Dayi">South Dayi</option>
+                                <option value="South Tongu">South Tongu</option>
+                                <option value="Suaman">Suaman</option>
+                                <option value="Suhum">Suhum</option>
+                                <option value="Sunyani Municipal">Sunyani Municipal</option>
+                                <option value="Sunyani West">Sunyani West</option>
+                                <option value="Takoradi">Takoradi</option>
+                                <option value="Tamale Metropolitan">Tamale Metropolitan</option>
+                                <option value="Tain">Tain</option>
+                                <option value="Tatale Sanguli">Tatale Sanguli</option>
+                                <option value="Techiman Municipal">Techiman Municipal</option>
+                                <option value="Techiman North">Techiman North</option>
+                                <option value="Tema Metropolitan">Tema Metropolitan</option>
+                                <option value="Tema West">Tema West</option>
+                                <option value="Tempane">Tempane</option>
+                                <option value="Twifo Atti Morkwa">Twifo Atti Morkwa</option>
+                                <option value="Twifo Hemang Lower Denkyira">Twifo Hemang Lower Denkyira</option>
+                                <option value="Upper Denkyira East">Upper Denkyira East</option>
+                                <option value="Upper Denkyira West">Upper Denkyira West</option>
+                                <option value="Upper Manya Krobo">Upper Manya Krobo</option>
+                                <option value="Upper West Akim">Upper West Akim</option>
+                                <option value="Wa East">Wa East</option>
+                                <option value="Wa Municipal">Wa Municipal</option>
+                                <option value="Wa West">Wa West</option>
+                                <option value="Wassa Amenfi Central">Wassa Amenfi Central</option>
+                                <option value="Wassa Amenfi East">Wassa Amenfi East</option>
+                                <option value="Wassa Amenfi West">Wassa Amenfi West</option>
+                                <option value="West Akim">West Akim</option>
+                                <option value="West Gonja">West Gonja</option>
+                                <option value="West Mamprusi">West Mamprusi</option>
+                                <option value="Wiawso">Wiawso</option>
+                                <option value="Yendi Municipal">Yendi Municipal</option>
+                                <option value="Yilo Krobo">Yilo Krobo</option>
+                                <option value="Zabzugu">Zabzugu</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="electoralArea">Electoral Area</label>
+                            <input type="text" id="electoralArea" name="electoralArea">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="streetName">Street Name</label>
+                            <input type="text" id="streetName" name="streetName">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="companyLocation">Company Location</label>
+                    <textarea id="companyLocation" name="companyLocation" rows="2"></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="contactPerson">Contact Person Name <span class="required">*</span></label>
+                            <input type="text" id="contactPerson" name="contactPerson" required>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="contactPhone">Contact Person Phone Number <span class="required">*</span></label>
+                            <input type="tel" id="contactPhone" name="contactPhone" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="contactRole">Contact Person Role <span class="required">*</span></label>
+                            <input type="text" id="contactRole" name="contactRole" required>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="contactEmail">Email of Contact Person</label>
+                            <input type="email" id="contactEmail" name="contactEmail">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="totalEmployees">Total Employees</label>
+                            <input type="number" id="totalEmployees" name="totalEmployees" min="0">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="ghanaianMale">Ghanaian Male</label>
+                            <input type="number" id="ghanaianMale" name="ghanaianMale" min="0" value="0">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="ghanaianFemale">Ghanaian Female</label>
+                            <input type="number" id="ghanaianFemale" name="ghanaianFemale" min="0" value="0">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="expatMale">Expatriate Male</label>
+                            <input type="number" id="expatMale" name="expatMale" min="0" value="0">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="expatFemale">Expatriate Female</label>
+                            <input type="number" id="expatFemale" name="expatFemale" min="0" value="0">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="expatShareholders">Expatriate Shareholders</label>
+                            <input type="number" id="expatShareholders" name="expatShareholders" min="0" value="0">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="permanentMale">Permanent Workers Male</label>
+                            <input type="number" id="permanentMale" name="permanentMale" min="0" value="0">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="permanentFemale">Permanent Workers Female</label>
+                            <input type="number" id="permanentFemale" name="permanentFemale" min="0" value="0">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="casualMale">Casual Workers Male</label>
+                            <input type="number" id="casualMale" name="casualMale" min="0" value="0">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="casualFemale">Casual Workers Female</label>
+                            <input type="number" id="casualFemale" name="casualFemale" min="0" value="0">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="contractMale">Contract Staff Male</label>
+                            <input type="number" id="contractMale" name="contractMale" min="0" value="0">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="contractFemale">Contract Staff Female</label>
+                            <input type="number" id="contractFemale" name="contractFemale" min="0" value="0">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="pwdMale">Persons with Disability (PWDs) Male</label>
+                            <input type="number" id="pwdMale" name="pwdMale" min="0" value="0">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="pwdFemale">Persons with Disability (PWDs) Female</label>
+                            <input type="number" id="pwdFemale" name="pwdFemale" min="0" value="0">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="minorMale">Minor Workers (under 18) Male</label>
+                            <input type="number" id="minorMale" name="minorMale" min="0" value="0">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="minorFemale">Minor Workers (under 18) Female</label>
+                            <input type="number" id="minorFemale" name="minorFemale" min="0" value="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Administrative -->
+        <div class="section">
+            <div class="section-header">📋 Section 2: Administrative</div>
+            <div class="section-content">
+                <div class="checkbox-grid">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="firstAidKit" name="firstAidKit">
+                        <label for="firstAidKit">🏥 Is there a current first aid kit in a location known and accessible to all employees?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="firstAidTraining" name="firstAidTraining">
+                        <label for="firstAidTraining">🎓 Have employees received required first aid trainings?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="safetyBulletinBoard" name="safetyBulletinBoard">
+                        <label for="safetyBulletinBoard">📌 Is there a safety bulletin board displaying Emergency phone numbers, evacuation routes and safety information?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="msdsAvailable" name="msdsAvailable">
+                        <label for="msdsAvailable">📄 Are Material Safety Data Sheets (MSDSs) on file and available to employees?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="emergencyPlan" name="emergencyPlan">
+                        <label for="emergencyPlan">🚨 Does the departmental Emergency Operations Plan include an emergency evacuation route and procedure?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="storeRoomManagement" name="storeRoomManagement">
+                        <label for="storeRoomManagement">📦 Are all unused stationaries kept at the store room?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="fireInspectionDocumented" name="fireInspectionDocumented">
+                        <label for="fireInspectionDocumented">🔥 Are fire inspections and fire drills documented?</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: General Safety/Housekeeping -->
+        <div class="section">
+            <div class="section-header">🧹 Section 3: General Safety/Housekeeping</div>
+            <div class="section-content">
+                <div class="checkbox-grid">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="exitsClear" name="exitsClear">
+                        <label for="exitsClear">🚪 Are the exits (doorways), exit aisles, or corridors free of obstacles and combustible storage?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="furnitureSecured" name="furnitureSecured">
+                        <label for="furnitureSecured">🗄️ Are filing cabinets, bookcases and other items over 4 feet tall securely bolted to walls?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="materialsSecured" name="materialsSecured">
+                        <label for="materialsSecured">📚 Are materials on shelves above chest level secured?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="stairwaysSecured" name="stairwaysSecured">
+                        <label for="stairwaysSecured">🪜 Are stairways secured?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="heatingMachinesSecure" name="heatingMachinesSecure">
+                        <label for="heatingMachinesSecure">☕ Are heating machines (e.g. Kettle, coffee maker, deep fryers etc.) securely placed to avoid risk of burns?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="overheadStorageSafe" name="overheadStorageSafe">
+                        <label for="overheadStorageSafe">📦 Is overhead storage of heavy items prevented from falling?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="heavyFilesBottom" name="heavyFilesBottom">
+                        <label for="heavyFilesBottom">📁 Are heavy files placed in bottom drawers to prevent tipping?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="fileDrawersClosed" name="fileDrawersClosed">
+                        <label for="fileDrawersClosed">🗃️ Are file drawers kept closed when not in use?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="stepLaddersProvided" name="stepLaddersProvided">
+                        <label for="stepLaddersProvided">🪜 Are stepladders provided for high storage areas?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="officeAreasCleaned" name="officeAreasCleaned">
+                        <label for="officeAreasCleaned">🧽 Are office areas cleaned & maintained regularly?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="storageRoomsMaintained" name="storageRoomsMaintained">
+                        <label for="storageRoomsMaintained">🗄️ Are storage rooms & recycling areas neatly maintained?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="wasteMaterialsProper" name="wasteMaterialsProper">
+                        <label for="wasteMaterialsProper">🗑️ Are all waste materials placed in the proper waste containers and emptied regularly?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="flooringGoodCondition" name="flooringGoodCondition">
+                        <label for="flooringGoodCondition">🏠 Is flooring in good condition with loose rugs and mats secured?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="rotatingMachinesGuarded" name="rotatingMachinesGuarded">
+                        <label for="rotatingMachinesGuarded">⚙️ Are rotating machines equipped with guard?</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: General Welfare -->
+        <div class="section">
+            <div class="section-header">🌟 Section 4: General Welfare</div>
+            <div class="section-content">
+                <div class="checkbox-grid">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="drinkingWaterProvided" name="drinkingWaterProvided">
+                        <label for="drinkingWaterProvided">💧 Is wholesome drinking water provided and maintained at suitable points?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="waterStorageSuitable" name="waterStorageSuitable">
+                        <label for="waterStorageSuitable">🏺 Is water stored in a suitable container and renewed daily?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="drinkingWaterMarked" name="drinkingWaterMarked">
+                        <label for="drinkingWaterMarked">🏷️ Is drinking water clearly marked 'Drinking Water'?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="clothingClosetProvided" name="clothingClosetProvided">
+                        <label for="clothingClosetProvided">👕 Is a closet provided for storing workers clothing?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="clothingClosetMaintained" name="clothingClosetMaintained">
+                        <label for="clothingClosetMaintained">🧹 Is the closet maintained?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="employeesEatSafely" name="employeesEatSafely">
+                        <label for="employeesEatSafely">🍽️ Do employees eat in closet which has poisonous or other injurious substance arising from dust or fumes?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="washingFacilitiesAvailable" name="washingFacilitiesAvailable">
+                        <label for="washingFacilitiesAvailable">🧼 Is washing facilities available for persons employed?</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Fire Protection -->
+        <div class="section">
+            <div class="section-header">🔥 Section 5: Fire Protection</div>
+            <div class="section-content">
+                <div class="checkbox-grid">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="exitsMarked" name="exitsMarked">
+                        <label for="exitsMarked">🚪 Are exits visibly marked & clear of obstruction?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="emergencyDoorsClosed" name="emergencyDoorsClosed">
+                        <label for="emergencyDoorsClosed">🔒 Are emergency doors closed securely at all times?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="stairwaysClear" name="stairwaysClear">
+                        <label for="stairwaysClear">🪜 Are stairways clear from obstacles?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="fireExtinguishersAvailable" name="fireExtinguishersAvailable">
+                        <label for="fireExtinguishersAvailable">🧯 Are proper fire extinguishers and smoke detectors available & inspected?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="disabilityProcedures" name="disabilityProcedures">
+                        <label for="disabilityProcedures">♿ Are special procedures in place for workers with disabilities to assist them to exits?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="combustibleMaterialsStored" name="combustibleMaterialsStored">
+                        <label for="combustibleMaterialsStored">📦 Are combustible materials stored in assigned storage cabinets or designated areas?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="fireDrillsRegular" name="fireDrillsRegular">
+                        <label for="fireDrillsRegular">🚨 Are fire drills held on a regular basis?</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Electrical Safety -->
+        <div class="section">
+            <div class="section-header">⚡ Section 6: Electrical Safety</div>
+            <div class="section-content">
+                <div class="checkbox-grid">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="electricalComponentsGood" name="electricalComponentsGood">
+                        <label for="electricalComponentsGood">🔌 Are all plugs, electrical cords, electrical panels, and receptacles in good condition?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="extensionCordsProper" name="extensionCordsProper">
+                        <label for="extensionCordsProper">🔗 Are extension cords NOT running through walls, under/over doors, through ceilings, or across aisles?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="extensionCordsNotPermanent" name="extensionCordsNotPermanent">
+                        <label for="extensionCordsNotPermanent">⚠️ Are extension cords NOT used as permanent source of electrical supply?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="extensionCordsNotLinked" name="extensionCordsNotLinked">
+                        <label for="extensionCordsNotLinked">🔗 Are extension cords NOT linked to each other?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="extensionCordsHeavyDuty" name="extensionCordsHeavyDuty">
+                        <label for="extensionCordsHeavyDuty">💪 Are extension cords minimum 14 gauge (heavy duty) and servicing only one appliance?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="electricalPanelAccess" name="electricalPanelAccess">
+                        <label for="electricalPanelAccess">🚪 Is clear access (36" clearance) provided to electrical panels?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="cordManagementSystems" name="cordManagementSystems">
+                        <label for="cordManagementSystems">📏 Are cord or cable systems used to manage all cords or cables?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="faultyEquipmentRemoved" name="faultyEquipmentRemoved">
+                        <label for="faultyEquipmentRemoved">❌ Is faulty or broken equipment removed from service?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="lampsClearCombustibles" name="lampsClearCombustibles">
+                        <label for="lampsClearCombustibles">💡 Are lamps well clear off curtains, papers and other combustible materials?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="cablesUnderDeskSafe" name="cablesUnderDeskSafe">
+                        <label for="cablesUnderDeskSafe">🖥️ Are cables lying under the desk properly managed?</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Computer Workstations -->
+        <div class="section">
+            <div class="section-header">💻 Section 7: Computer Workstations</div>
+            <div class="section-content">
+                <div class="checkbox-grid">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="keyboardMouseReach" name="keyboardMouseReach">
+                        <label for="keyboardMouseReach">⌨️ Are the keyboard and mouse within easy reach?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="keyboardMonitorAligned" name="keyboardMonitorAligned">
+                        <label for="keyboardMonitorAligned">🖥️ Keyboard and monitor aligned?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="chairsAdjustable" name="chairsAdjustable">
+                        <label for="chairsAdjustable">🪑 Are chairs used at computer workstations adjustable?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="legKneeClearance" name="legKneeClearance">
+                        <label for="legKneeClearance">🦵 Is leg and knee clearance available under the desk surface?</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 8: Incident Management -->
+        <div class="section">
+            <div class="section-header">📊 Section 8: Incident Management</div>
+            <div class="section-content">
+                <div class="checkbox-grid">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="accidentRecordsKept" name="accidentRecordsKept">
+                        <label for="accidentRecordsKept">📋 Does the workplace keep particulars of every incident/accident?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="occupationalDiseaseRecords" name="occupationalDiseaseRecords">
+                        <label for="occupationalDiseaseRecords">🏥 Does the workplace keep particulars of every case of occupational disease?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="writtenNoticesSent" name="writtenNoticesSent">
+                        <label for="writtenNoticesSent">📤 Are written notice of incident/accident sent in the prescribed form to the Chief Inspector of factories?</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 9: Certificates/Permits Available -->
+        <div class="section">
+            <div class="section-header">📜 Section 9: Certificates/Permits Available</div>
+            <div class="section-content">
+                <div class="checkbox-grid">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="labourCertificate" name="labourCertificate">
+                        <label for="labourCertificate">🏛️ Labour Certificate (Department of Labour)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="factoriesCertificate" name="factoriesCertificate">
+                        <label for="factoriesCertificate">🏭 Factories, Offices & Shops Certificate (DFI)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="incorporationCertificate" name="incorporationCertificate">
+                        <label for="incorporationCertificate">📋 Certificate of Incorporation (RGD)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="commenceCertificate" name="commenceCertificate">
+                        <label for="commenceCertificate">🏢 Certificate to Commence Business (RGD)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="environmentalPermit" name="environmentalPermit">
+                        <label for="environmentalPermit">🌍 Environmental Permit (EPA)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="safetyTraining" name="safetyTraining">
+                        <label for="safetyTraining">🎓 Health & Safety Training (Department of Labour)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="fireCertificate" name="fireCertificate">
+                        <label for="fireCertificate">🔥 Fire Certificate (GNFS)</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 10: Inspector Information -->
+        <div class="section">
+            <div class="section-header">👤 Section 10: Inspector Information</div>
+            <div class="section-content">
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="inspectorName">Name of Inspector <span class="required">*</span></label>
+                            <input type="text" id="inspectorName" name="inspectorName" required>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="inspectionDate">Inspection Date <span class="required">*</span></label>
+                            <input type="date" id="inspectionDate" name="inspectionDate" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="supervisorSignature">Supervisor's Name</label>
+                    <input type="text" id="supervisorSignature" name="supervisorSignature">
+                </div>
+                
+                <div class="form-group">
+                    <label for="inspectorComments">Inspector Comments & Recommendations</label>
+                    <textarea id="inspectorComments" name="inspectorComments" rows="4" placeholder="Describe safety violations found, recommendations for improvement, follow-up actions required..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="overallSafetyRating">Overall Safety Rating</label>
+                    <select id="overallSafetyRating" name="overallSafetyRating">
+                        <option value="">Select rating</option>
+                        <option value="excellent">Excellent - No major issues</option>
+                        <option value="good">Good - Minor issues to address</option>
+                        <option value="satisfactory">Satisfactory - Some improvements needed</option>
+                        <option value="poor">Poor - Major safety concerns</option>
+                        <option value="critical">Critical - Immediate action required</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="actions">
+        <button type="button" class="btn" onclick="saveForm()">💾 Save Safety Inspection</button>
+        <button type="button" class="btn btn-success" onclick="exportToCSV()">📊 Export to CSV</button>
+        <button type="button" class="btn btn-info" onclick="loadSavedForms()">📁 View Saved (🔒 <span id="savedCount">0</span>)</button>
+        <button type="button" class="btn btn-warning" onclick="showEditOptions()">✏️ Edit Saved Form</button>
+        <button type="button" class="btn btn-secondary" onclick="printForm()">🖨️ Print Form</button>
+        <button type="button" class="btn btn-danger" onclick="clearForm()">🗑️ Clear Form</button>
+    </div>
+
+    <!-- Edit Form Modal -->
+    <div id="editModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000;">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 10px; max-width: 90%; max-height: 80%; overflow-y: auto;">
+            <h3>✏️ Select Safety Form to Edit</h3>
+            <div id="editFormsList"></div>
+            <div style="margin-top: 20px; text-align: center;">
+                <button type="button" class="btn btn-secondary" onclick="closeEditModal()">❌ Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentLocationData = {
+            coordinates: null,
+            method: null,
+            description: null
+        };
+
+        let editingFormIndex = -1; // Track which form we're editing (-1 = new form)
+
+        // Initialize form
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current date
+            document.getElementById('inspectionDate').value = new Date().toISOString().split('T')[0];
+            
+            // Generate form ID
+            const formId = 'SAFETY_' + Date.now();
+            document.getElementById('formId').textContent = formId;
+            
+            // Check if opened in WhatsApp browser
+            checkWhatsAppBrowser();
+            
+            // Update saved count
+            updateSavedCount();
+            
+            // Load auto-saved data if exists
+            loadAutoSavedData();
+            
+            // Collapse instructions by default
+            toggleInstructions();
+        });
+
+        // Check if opened in WhatsApp browser and show warning
+        function checkWhatsAppBrowser() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            const isWhatsApp = userAgent.includes('wv') && userAgent.includes('whatsapp');
+            const isInApp = window.navigator.standalone === false && userAgent.includes('mobile');
+            
+            if (isWhatsApp || (userAgent.includes('wv') && window.location !== window.parent.location)) {
+                document.getElementById('whatsappWarning').style.display = 'block';
+                updateLocationStatus('⚠️ WhatsApp browser detected. Use "Open in Browser" or manual entry.', 'error');
+            }
+        }
+
+        // Toggle instructions section
+        function toggleInstructions() {
+            const content = document.getElementById('instructionsContent');
+            const toggle = document.getElementById('instructionsToggle');
+            
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+                toggle.textContent = '▼';
+            } else {
+                content.style.display = 'none';
+                toggle.textContent = '▶';
+            }
+        }
+
+        // Open in real browser (escape WhatsApp browser)
+        function openInRealBrowser() {
+            const currentUrl = window.location.href;
+            
+            // Try multiple methods to open in real browser
+            if (navigator.userAgent.includes('Android')) {
+                // Android - try to open in Chrome/default browser
+                window.open('googlechrome://navigate?url=' + encodeURIComponent(currentUrl), '_system');
+                setTimeout(() => {
+                    window.open('intent://navigate?url=' + encodeURIComponent(currentUrl) + '#Intent;scheme=http;package=com.android.chrome;end', '_system');
+                }, 500);
+                setTimeout(() => {
+                    window.open(currentUrl, '_blank');
+                }, 1000);
+            } else {
+                // iOS or other
+                window.open(currentUrl, '_blank');
+            }
+            
+            alert('📱 Instructions:\n\n1. The form should open in your phone\'s browser\n2. If not, copy this link and paste in Chrome/Safari:\n\n' + currentUrl + '\n\n3. GPS will work better in the real browser!');
+        }
+
+        // Open Google Maps with better instructions
+        function openGoogleMaps() {
+            const instructions = `📍 Getting Coordinates from Google Maps:
+
+1. 🗺️ Open Google Maps on your phone
+2. 📍 Search for the company or tap "Your location"
+3. 👆 Long press on the exact location
+4. 📋 Copy the coordinates (numbers like: 5.6037, -0.1870)
+5. ⬅️ Come back here and paste in the coordinates field
+
+Opening Google Maps now...`;
+            
+            alert(instructions);
+            
+            // Open Google Maps
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            if (/android/i.test(userAgent)) {
+                window.open('geo:0,0?q=current+location', '_blank');
+                setTimeout(() => {
+                    window.open('https://maps.google.com', '_blank');
+                }, 1000);
+            } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                window.open('maps://', '_blank');
+                setTimeout(() => {
+                    window.open('https://maps.google.com', '_blank');
+                }, 1000);
+            } else {
+                window.open('https://maps.google.com', '_blank');
+            }
+            
+            updateLocationStatus('🗺️ Google Maps opened. Follow the steps to copy coordinates.', 'warning');
+        }
+
+        // Show quick guide
+        function showQuickGuide() {
+            const guide = document.getElementById('quickGuide');
+            if (guide.style.display === 'none') {
+                guide.style.display = 'block';
+                updateLocationStatus('📋 Quick guide shown below. Follow the steps!', 'success');
+            } else {
+                guide.style.display = 'none';
+            }
+        }
+
+        function getGPSLocation() {
+            // Check if in WhatsApp browser first
+            const userAgent = navigator.userAgent.toLowerCase();
+            if (userAgent.includes('wv') || userAgent.includes('whatsapp')) {
+                alert('❌ GPS doesn\'t work in WhatsApp browser!\n\n✅ Solution: Click "Open in Real Browser" button above\n\nOr use Google Maps method to get coordinates manually.');
+                return;
+            }
+            
+            if ("geolocation" in navigator) {
+                updateLocationStatus('🔍 Requesting GPS permission...', 'warning');
+                
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        const lat = position.coords.latitude.toFixed(6);
+                        const lon = position.coords.longitude.toFixed(6);
+                        currentLocationData.coordinates = `${lat}, ${lon}`;
+                        currentLocationData.method = 'GPS';
+                        document.getElementById('manualCoordinates').value = `${lat}, ${lon}`;
+                        updateLocationStatus(`✅ GPS coordinates obtained: ${lat}, ${lon}`, 'success');
+                    },
+                    function(error) {
+                        let errorMessage = '❌ GPS failed: ';
+                        let solution = '';
+                        switch(error.code) {
+                            case error.PERMISSION_DENIED:
+                                errorMessage += 'Permission denied.';
+                                solution = '\n\n✅ Try: Click "Open in Real Browser" or use Google Maps method';
+                                break;
+                            case error.POSITION_UNAVAILABLE:
+                                errorMessage += 'Location unavailable.';
+                                solution = '\n\n✅ Try: Move to open area or use Google Maps method';
+                                break;
+                            case error.TIMEOUT:
+                                errorMessage += 'GPS timeout.';
+                                solution = '\n\n✅ Try: Google Maps method below';
+                                break;
+                            default:
+                                errorMessage += 'Unknown error.';
+                                solution = '\n\n✅ Try: Google Maps method or manual entry';
+                                break;
+                        }
+                        updateLocationStatus(errorMessage.replace('❌ GPS failed: ', ''), 'error');
+                        alert(errorMessage + solution);
+                    },
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 10000,
+                        maximumAge: 300000
+                    }
+                );
+            } else {
+                updateLocationStatus('❌ GPS not supported on this device', 'error');
+                alert('❌ GPS not supported!\n\n✅ Use Google Maps method to get coordinates.');
+            }
+        }
+
+        function updateLocationDisplay() {
+            const coords = document.getElementById('manualCoordinates').value;
+            if (coords && coords.includes(',')) {
+                const cleanCoords = coords.trim();
+                currentLocationData.coordinates = cleanCoords;
+                currentLocationData.method = 'Manual';
+                updateLocationStatus(`✅ Coordinates entered: ${cleanCoords}`, 'success');
+            } else if (coords && coords.length > 0) {
+                updateLocationStatus('⚠️ Please enter coordinates in format: 5.6037, -0.1870', 'warning');
+            }
+        }
+
+        function updateLocationStatus(message, type) {
+            const statusDiv = document.getElementById('locationStatus');
+            statusDiv.textContent = message;
+            statusDiv.className = `location-status location-${type}`;
+        }
+
+        // District filtering function
+        function filterDistricts() {
+            const searchTerm = document.getElementById('districtSearch').value.toLowerCase();
+            const select = document.getElementById('district');
+            const options = select.options;
+            
+            for (let i = 1; i < options.length; i++) { // Start from 1 to skip the default option
+                const option = options[i];
+                const text = option.text.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    option.style.display = '';
+                } else {
+                    option.style.display = 'none';
+                }
+            }
+        }
+
+        // Auto-save functionality
+        let autoSaveTimer;
+        document.getElementById('healthSafetyForm').addEventListener('input', function() {
+            clearTimeout(autoSaveTimer);
+            autoSaveTimer = setTimeout(autoSave, 3000); // Auto-save after 3 seconds
+        });
+
+        function autoSave() {
+            const formData = getFormData();
+            formData.autoSaved = true;
+            formData.lastAutoSave = new Date().toISOString();
+            localStorage.setItem('safety_form_autosave', JSON.stringify(formData));
+            document.getElementById('lastSaved').textContent = new Date().toLocaleString();
+            document.getElementById('formStatus').textContent = 'Auto-saved 🔒';
+        }
+
+        function getFormData() {
+            const form = document.getElementById('healthSafetyForm');
+            const formData = {};
+            
+            // Get all form elements
+            const elements = form.querySelectorAll('input, select, textarea');
+            elements.forEach(element => {
+                if (element.type === 'checkbox') {
+                    formData[element.name] = element.checked ? 'Yes' : 'No';
+                } else {
+                    formData[element.name] = element.value || '';
+                }
+            });
+            
+            // Add location data
+            formData.gpsCoordinates = currentLocationData.coordinates || document.getElementById('manualCoordinates').value || '';
+            formData.locationMethod = currentLocationData.method || (document.getElementById('manualCoordinates').value ? 'Manual' : '');
+            formData.locationDescription = document.getElementById('locationDescription').value || '';
+            
+            // Add metadata
+            formData.formType = 'Health & Safety Inspection';
+            formData.formId = document.getElementById('formId').textContent;
+            formData.submissionTime = new Date().toISOString();
+            formData.inspectorDevice = navigator.userAgent;
+            
+            return formData;
+        }
+
+        function saveForm() {
+            const formData = getFormData();
+            
+            // Validate required fields
+            if (!formData.companyName || !formData.companyTIN || !formData.inspectorName) {
+                alert('⚠️ Please fill in all required fields:\n• Company Name\n• Tax Identification Number\n• Inspector Name');
+                return;
+            }
+            
+            // Get saved forms
+            let savedForms = JSON.parse(localStorage.getItem('safety_inspections') || '[]');
+            
+            // Remove auto-save flag
+            delete formData.autoSaved;
+            delete formData.lastAutoSave;
+            
+            if (editingFormIndex >= 0) {
+                // Update existing form
+                savedForms[editingFormIndex] = formData;
+                editingFormIndex = -1; // Reset editing mode
+                document.getElementById('formStatus').textContent = 'Form updated successfully 🔒✅';
+                alert('✅ Health & safety inspection form updated successfully!\n\n🔒 Total saved inspections: ' + savedForms.length);
+            } else {
+                // Add new form
+                savedForms.push(formData);
+                document.getElementById('formStatus').textContent = 'Saved successfully 🔒✅';
+                alert('✅ Health & safety inspection form saved successfully!\n\n🔒 Total saved inspections: ' + savedForms.length);
+            }
+            
+            localStorage.setItem('safety_inspections', JSON.stringify(savedForms));
+            
+            // Clear auto-save
+            localStorage.removeItem('safety_form_autosave');
+            
+            document.getElementById('lastSaved').textContent = new Date().toLocaleString();
+            updateSavedCount();
+        }
+
+        // Show edit options modal
+        function showEditOptions() {
+            const savedForms = JSON.parse(localStorage.getItem('safety_inspections') || '[]');
+            
+            if (savedForms.length === 0) {
+                alert('📁 No saved forms to edit.\nSave some safety inspections first.');
+                return;
+            }
+            
+            const editFormsList = document.getElementById('editFormsList');
+            editFormsList.innerHTML = '';
+            
+            savedForms.forEach((form, index) => {
+                const date = new Date(form.submissionTime).toLocaleDateString();
+                const time = new Date(form.submissionTime).toLocaleTimeString();
+                const rating = form.overallSafetyRating || 'Not rated';
+                
+                const formDiv = document.createElement('div');
+                formDiv.style.cssText = 'background: #f8f9fa; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #ddd;';
+                
+                formDiv.innerHTML = `
+                    <div style="font-weight: bold; color: #dc3545;">${form.companyName || 'Unnamed Company'}</div>
+                    <div style="font-size: 0.9em; color: #666;">
+                        📅 ${date} ${time} | 👤 ${form.inspectorName || 'Unknown Inspector'}<br>
+                        📍 ${form.district || 'Unknown District'} | 🏆 ${rating}
+                        ${form.gpsCoordinates ? '<br>🗺️ GPS: ' + form.gpsCoordinates : ''}
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <button class="btn btn-warning" style="margin-right: 10px;" onclick="loadFormForEdit(${index})">✏️ Edit This Form</button>
+                        <button class="btn btn-danger" onclick="deleteForm(${index})">🗑️ Delete</button>
+                    </div>
+                `;
+                
+                editFormsList.appendChild(formDiv);
+            });
+            
+            document.getElementById('editModal').style.display = 'block';
+        }
+
+        // Load form for editing
+        function loadFormForEdit(index) {
+            const savedForms = JSON.parse(localStorage.getItem('safety_inspections') || '[]');
+            
+            if (index >= 0 && index < savedForms.length) {
+                const formData = savedForms[index];
+                
+                // Set editing mode
+                editingFormIndex = index;
+                
+                // Load form data
+                Object.keys(formData).forEach(key => {
+                    const element = document.querySelector(`[name="${key}"]`);
+                    if (element) {
+                        if (element.type === 'checkbox') {
+                            element.checked = formData[key] === 'Yes';
+                        } else {
+                            element.value = formData[key];
+                        }
+                    }
+                });
+                
+                // Load location data
+                if (formData.gpsCoordinates) {
+                    currentLocationData.coordinates = formData.gpsCoordinates;
+                    currentLocationData.method = formData.locationMethod;
+                    document.getElementById('manualCoordinates').value = formData.gpsCoordinates;
+                    updateLocationStatus(`✏️ Editing: ${formData.gpsCoordinates}`, 'warning');
+                }
+                
+                if (formData.locationDescription) {
+                    document.getElementById('locationDescription').value = formData.locationDescription;
+                }
+                
+                // Update status
+                document.getElementById('formStatus').textContent = `Editing: ${formData.companyName} ✏️`;
+                
+                // Close modal
+                closeEditModal();
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+                
+                alert(`✏️ Safety form loaded for editing:\n\n${formData.companyName}\n📅 ${new Date(formData.submissionTime).toLocaleDateString()}\n\n💡 Make your changes and click "Save Safety Inspection" to update.`);
+            }
+        }
+
+        // Delete form
+        function deleteForm(index) {
+            const savedForms = JSON.parse(localStorage.getItem('safety_inspections') || '[]');
+            
+            if (index >= 0 && index < savedForms.length) {
+                const formData = savedForms[index];
+                
+                if (confirm(`🗑️ Delete this safety inspection?\n\n${formData.companyName}\n📅 ${new Date(formData.submissionTime).toLocaleDateString()}\n\n⚠️ This cannot be undone!`)) {
+                    savedForms.splice(index, 1);
+                    localStorage.setItem('safety_inspections', JSON.stringify(savedForms));
+                    updateSavedCount();
+                    
+                    // Refresh the edit modal
+                    showEditOptions();
+                    
+                    alert('✅ Safety form deleted successfully!');
+                }
+            }
+        }
+
+        // Close edit modal
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+
+        function exportToCSV() {
+            const savedForms = JSON.parse(localStorage.getItem('safety_inspections') || '[]');
+            
+            if (savedForms.length === 0) {
+                alert('❌ No saved forms to export.\nPlease save some safety inspection forms first.');
+                return;
+            }
+            
+            // Create CSV content
+            const headers = Object.keys(savedForms[0]);
+            let csvContent = headers.join(',') + '\n';
+            
+            savedForms.forEach(form => {
+                const row = headers.map(header => {
+                    const value = form[header] || '';
+                    // Escape commas and quotes in CSV
+                    return '"' + String(value).replace(/"/g, '""') + '"';
+                });
+                csvContent += row.join(',') + '\n';
+            });
+            
+            // Download CSV file
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Safety_Inspections_${new Date().toISOString().split('T')[0]}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            
+            // Clear the form after successful export
+            clearForm();
+            
+            alert(`🔒 Exported ${savedForms.length} health & safety inspection records to CSV file.\n\nFile: Safety_Inspections_${new Date().toISOString().split('T')[0]}.csv\n\n✅ Form has been cleared for next inspection.`);
+        }
+
+        function loadSavedForms() {
+            const savedForms = JSON.parse(localStorage.getItem('safety_inspections') || '[]');
+            
+            if (savedForms.length === 0) {
+                alert('📁 No saved forms found.\nSave some safety inspections first to view them here.');
+                return;
+            }
+            
+            let message = `🔒 Found ${savedForms.length} saved health & safety inspection(s):\n\n`;
+            savedForms.slice(-10).forEach((form, index) => {
+                const date = new Date(form.submissionTime).toLocaleDateString();
+                const rating = form.overallSafetyRating || 'Not rated';
+                message += `${savedForms.length - 9 + index}. ${form.companyName || 'Unnamed Company'}\n`;
+                message += `   📅 ${date} | 👤 ${form.inspectorName || 'Unknown Inspector'}\n`;
+                message += `   📍 ${form.district || 'Unknown District'} | 🏆 ${rating}\n`;
+                if (form.gpsCoordinates) {
+                    message += `   🗺️ GPS: ${form.gpsCoordinates}\n`;
+                }
+                message += '\n';
+            });
+            
+            if (savedForms.length > 10) {
+                message += `... and ${savedForms.length - 10} more entries.\n\n`;
+            }
+            
+            message += '💡 Use "Export to CSV" to get all data in spreadsheet format.';
+            alert(message);
+        }
+
+        function clearForm() {
+            let confirmMessage = '⚠️ Are you sure you want to clear all form data?\n\nThis will:\n• Clear all entered information\n• Delete auto-saved data\n• Reset the form to defaults';
+            
+            if (editingFormIndex >= 0) {
+                confirmMessage += '\n• Cancel editing mode';
+            }
+            
+            confirmMessage += '\n\nThis action cannot be undone.';
+            
+            if (confirm(confirmMessage)) {
+                document.getElementById('healthSafetyForm').reset();
+                document.getElementById('inspectionDate').value = new Date().toISOString().split('T')[0];
+                document.getElementById('formStatus').textContent = 'Form cleared 🗑️';
+                document.getElementById('districtSearch').value = '';
+                localStorage.removeItem('safety_form_autosave');
+                
+                // Reset editing mode
+                editingFormIndex = -1;
+                
+                // Clear location data
+                currentLocationData = {
+                    coordinates: null,
+                    method: null,
+                    description: null
+                };
+                document.getElementById('manualCoordinates').value = '';
+                document.getElementById('locationDescription').value = '';
+                document.getElementById('quickGuide').style.display = 'none';
+                updateLocationStatus('📍 Choose a method to get location coordinates', 'warning');
+                
+                // Generate new form ID
+                const formId = 'SAFETY_' + Date.now();
+                document.getElementById('formId').textContent = formId;
+            }
+        }
+
+        function printForm() {
+            window.print();
+        }
+
+        function updateSavedCount() {
+            const savedForms = JSON.parse(localStorage.getItem('safety_inspections') || '[]');
+            document.getElementById('savedCount').textContent = savedForms.length;
+        }
+
+        function loadAutoSavedData() {
+            const autoSaved = localStorage.getItem('safety_form_autosave');
+            if (autoSaved) {
+                const data = JSON.parse(autoSaved);
+                if (data.autoSaved && confirm('🔄 Found auto-saved safety data from ' + new Date(data.lastAutoSave).toLocaleString() + '\n\nWould you like to restore it?')) {
+                    // Restore form data
+                    Object.keys(data).forEach(key => {
+                        const element = document.querySelector(`[name="${key}"]`);
+                        if (element) {
+                            if (element.type === 'checkbox') {
+                                element.checked = data[key] === 'Yes';
+                            } else {
+                                element.value = data[key];
+                            }
+                        }
+                    });
+                    
+                    // Restore location data
+                    if (data.gpsCoordinates) {
+                        currentLocationData.coordinates = data.gpsCoordinates;
+                        currentLocationData.method = data.locationMethod;
+                        document.getElementById('manualCoordinates').value = data.gpsCoordinates;
+                        updateLocationStatus(`🔄 Restored location: ${data.gpsCoordinates}`, 'success');
+                    }
+                    
+                    document.getElementById('formStatus').textContent = 'Auto-saved data restored 🔄';
+                    document.getElementById('lastSaved').textContent = new Date(data.lastAutoSave).toLocaleString();
+                }
+            }
+        }
+
+        // Prevent accidental form loss
+        window.addEventListener('beforeunload', function(e) {
+            const formData = getFormData();
+            const hasData = Object.values(formData).some(value => value && value !== '' && value !== 'No');
+            
+            if (hasData) {
+                e.preventDefault();
+                e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+            }
+        });
+    </script>
+</body>
+</html>
