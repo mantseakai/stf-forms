@@ -239,6 +239,21 @@
             font-size: 12px;
         }
         
+        /* Electrical Safety Grouping Styles */
+        .electrical-group {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #dc3545;
+        }
+        
+        .electrical-group h5 {
+            margin: 0 0 15px 0;
+            color: #dc3545;
+            font-size: 1em;
+        }
+        
         @media (max-width: 768px) {
             body { padding: 10px; }
             .form-row { flex-direction: column; }
@@ -637,14 +652,14 @@
                 <div class="form-row">
                     <div class="form-col">
                         <div class="form-group">
-                            <label for="contactPerson">Contact Person Name <span class="required">*</span></label>
+                            <label for="contactPerson">Name of Contact Person <span class="required">*</span></label>
                             <input type="text" id="contactPerson" name="contactPerson" required>
                         </div>
                     </div>
                     <div class="form-col">
                         <div class="form-group">
-                            <label for="contactPhone">Contact Person Phone Number <span class="required">*</span></label>
-                            <input type="tel" id="contactPhone" name="contactPhone" required>
+                            <label for="contactRole">Role of Contact Person <span class="required">*</span></label>
+                            <input type="text" id="contactRole" name="contactRole" required>
                         </div>
                     </div>
                 </div>
@@ -652,8 +667,8 @@
                 <div class="form-row">
                     <div class="form-col">
                         <div class="form-group">
-                            <label for="contactRole">Contact Person Role <span class="required">*</span></label>
-                            <input type="text" id="contactRole" name="contactRole" required>
+                            <label for="contactPhone">Contact Person Phone Number <span class="required">*</span></label>
+                            <input type="tel" id="contactPhone" name="contactPhone" required>
                         </div>
                     </div>
                     <div class="form-col">
@@ -799,8 +814,8 @@
                         <label for="firstAidKit">🏥 Is there a current first aid kit in a location known and accessible to all employees?</label>
                     </div>
                     <div class="checkbox-item">
-                        <input type="checkbox" id="firstAidTraining" name="firstAidTraining">
-                        <label for="firstAidTraining">🎓 Have employees received required first aid trainings?</label>
+                        <input type="checkbox" id="healthSafetyTraining" name="healthSafetyTraining">
+                        <label for="healthSafetyTraining">🎓 Have employees received required health & safety trainings?</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="safetyBulletinBoard" name="safetyBulletinBoard">
@@ -902,7 +917,11 @@
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="waterStorageSuitable" name="waterStorageSuitable">
-                        <label for="waterStorageSuitable">🏺 Is water stored in a suitable container and renewed daily?</label>
+                        <label for="waterStorageSuitable">🏺 Is water stored in a suitable container?</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="waterRenewedDaily" name="waterRenewedDaily">
+                        <label for="waterRenewedDaily">🔄 Is the drinking water renewed daily?</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="drinkingWaterMarked" name="drinkingWaterMarked">
@@ -972,24 +991,51 @@
                 <div class="checkbox-grid">
                     <div class="checkbox-item">
                         <input type="checkbox" id="electricalComponentsGood" name="electricalComponentsGood">
-                        <label for="electricalComponentsGood">🔌 Are all plugs, electrical cords, electrical panels, and receptacles in good condition?</label>
+                        <label for="electricalComponentsGood">🔌 Are all plugs, electrical cords, electrical panels, and receptacles in good condition (no exposed conductors or broken insulation)?</label>
                     </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="extensionCordsProper" name="extensionCordsProper">
-                        <label for="extensionCordsProper">🔗 Are extension cords NOT running through walls, under/over doors, through ceilings, or across aisles?</label>
+                </div>
+                
+                <div class="electrical-group">
+                    <h5>⚡ Are extension cords running:</h5>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="extensionCordsWalls" name="extensionCordsWalls">
+                            <label for="extensionCordsWalls">🧱 Through walls?</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="extensionCordsDoors" name="extensionCordsDoors">
+                            <label for="extensionCordsDoors">🚪 Under or over doors?</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="extensionCordsCeilings" name="extensionCordsCeilings">
+                            <label for="extensionCordsCeilings">🏠 Through ceilings?</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="extensionCordsAisles" name="extensionCordsAisles">
+                            <label for="extensionCordsAisles">🚶 Across aisles?</label>
+                        </div>
                     </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="extensionCordsNotPermanent" name="extensionCordsNotPermanent">
-                        <label for="extensionCordsNotPermanent">⚠️ Are extension cords NOT used as permanent source of electrical supply?</label>
+                </div>
+                
+                <div class="electrical-group">
+                    <h5>⚡ Are extension cords:</h5>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="extensionCordsPermanent" name="extensionCordsPermanent">
+                            <label for="extensionCordsPermanent">🔌 Used as permanent source of electrical supply?</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="extensionCordsLinked" name="extensionCordsLinked">
+                            <label for="extensionCordsLinked">🔗 Linked to each other?</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="extensionCordsHeavyDuty" name="extensionCordsHeavyDuty">
+                            <label for="extensionCordsHeavyDuty">💪 At minimum 14 gauge (heavy duty) 6" or less, and servicing only one appliance or fixture?</label>
+                        </div>
                     </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="extensionCordsNotLinked" name="extensionCordsNotLinked">
-                        <label for="extensionCordsNotLinked">🔗 Are extension cords NOT linked to each other?</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="extensionCordsHeavyDuty" name="extensionCordsHeavyDuty">
-                        <label for="extensionCordsHeavyDuty">💪 Are extension cords minimum 14 gauge (heavy duty) and servicing only one appliance?</label>
-                    </div>
+                </div>
+                
+                <div class="checkbox-grid">
                     <div class="checkbox-item">
                         <input type="checkbox" id="electricalPanelAccess" name="electricalPanelAccess">
                         <label for="electricalPanelAccess">🚪 Is clear access (36" clearance) provided to electrical panels?</label>
@@ -1007,8 +1053,8 @@
                         <label for="lampsClearCombustibles">💡 Are lamps well clear off curtains, papers and other combustible materials?</label>
                     </div>
                     <div class="checkbox-item">
-                        <input type="checkbox" id="cablesUnderDeskSafe" name="cablesUnderDeskSafe">
-                        <label for="cablesUnderDeskSafe">🖥️ Are cables lying under the desk properly managed?</label>
+                        <input type="checkbox" id="cablesUnderDeskUnattended" name="cablesUnderDeskUnattended">
+                        <label for="cablesUnderDeskUnattended">🖥️ Are cables lying under the desk unattended to?</label>
                     </div>
                 </div>
             </div>
