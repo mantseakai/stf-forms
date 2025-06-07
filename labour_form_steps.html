@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Labour Inspection - Step by Step</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.5;
+        }
+        
+        .container {
+            max-width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c5f2d, #4a7c59);
+            color: white;
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .progress-container {
+            background: white;
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2c5f2d, #4a7c59);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .progress-text {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .form-container {
+            flex: 1;
+            padding: 20px 15px;
+            background: white;
+            margin: 0;
+        }
+        
+        .step {
+            display: none;
+        }
+        
+        .step.active {
+            display: block;
+        }
+        
+        .step-title {
+            font-size: 1.3em;
+            color: #2c5f2d;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .form-col {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95em;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.2s ease;
+            background: #fafafa;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            border-color: #2c5f2d;
+            outline: none;
+            background: white;
+        }
+        
+        .required {
+            color: #dc3545;
+        }
+        
+        .checkbox-group {
+            margin-top: 15px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin-right: 12px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+        
+        .checkbox-item label {
+            margin: 0;
+            font-weight: normal;
+            font-size: 0.95em;
+            line-height: 1.4;
+        }
+        
+        .location-section {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .location-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            min-height: 48px;
+        }
+        
+        .btn-primary {
+            background: #2c5f2d;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #1e4220;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+        
+        .btn-info {
+            background: #17a2b8;
+            color: white;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .navigation {
+            background: white;
+            padding: 15px;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        
+        .nav-btn {
+            flex: 1;
+            max-width: 150px;
+        }
+        
+        .district-search input {
+            margin-bottom: 8px;
+            font-size: 14px;
+            padding: 8px 12px;
+        }
+        
+        .location-status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+        
+        .location-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .location-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .location-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .form-summary {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+        
+        .summary-label {
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .summary-value {
+            color: #6c757d;
+            text-align: right;
+            max-width: 60%;
+            word-break: break-word;
+        }
+        
+        /* Action buttons for saved forms */
+        .action-buttons {
+            background: white;
+            padding: 20px 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .action-buttons .btn {
+            width: 100%;
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background: white;
+            margin: 20px;
+            border-radius: 8px;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .saved-form-item {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .saved-form-title {
+            font-weight: 600;
+            color: #2c5f2d;
+            margin-bottom: 8px;
+        }
+        
+        .saved-form-details {
+            font-size: 0.9em;
+            color: #6c757d;
+            line-height: 1.4;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+            }
+            
+            .form-col {
+                min-width: 100%;
+            }
+            
+            .location-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                padding: 12px 16px;
+                font-size: 0.9em;
+            }
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🏛️ MINISTRY OF LABOUR, JOBS AND EMPLOYMENT</h1>
+            <p>Department Of Labour - Inspection Form</p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text">
+                Step <span id="currentStep">1</span> of <span id="totalSteps">10</span>
+            </div>
+        </div>
+
+        <!-- Form Container -->
+        <div class="form-container">
+            <form id="labourForm">
+                <!-- Step 1: Company Information -->
+                <div class="step active" data-step="1">
+                    <div class="step-title">🏢 Company Information</div>
+                    
+                    <!-- Location Section -->
+                    <div class="location-section">
+                        <h4>📍 Location Information</h4>
+                        <div class="location-buttons">
+                            <button type="button" class="btn btn-warning" onclick="getGPSLocation()">📡 Get GPS</button>
+                            <button type="button" class="btn btn-info" onclick="openGoogleMaps()">🗺️ Google Maps</button>
+                        </div>
+                        <div id="locationStatus" class="location-status location-warning">
+                            📍 Choose a method to get location coordinates
+                        </div>
+                        <div class="form-group">
+                            <label for="manualCoordinates">📍 Coordinates (Latitude, Longitude):</label>
+                            <input type="text" id="manualCoordinates" name="manualCoordinates" placeholder="e.g., 5.6037, -0.1870" onchange="updateLocationDisplay()">
+                        </div>
+                        <div class="form-group">
+                            <label for="locationDescription">🏢 Landmark/Description:</label>
+                            <input type="text" id="locationDescription" name="locationDescription" placeholder="e.g., Near Kotoka Airport, Behind Total Station">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="companyName">Company Name <span class="required">*</span></label>
+                        <input type="text" id="companyName" name="companyName" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="companyTIN">Tax Identification Number <span class="required">*</span></label>
+                                <input type="text" id="companyTIN" name="companyTIN" required>
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="district">District <span class="required">*</span></label>
+                                <div class="district-search">
+                                    <input type="text" id="districtSearch" placeholder="Search for district..." onkeyup="filterDistricts()">
+                                </div>
+                                <select id="district" name="district" required>
+                                    <option value="">-- Select District --</option>
+                                    <option value="Accra Metropolitan">Accra Metropolitan</option>
+                                    <option value="Kumasi Metropolitan">Kumasi Metropolitan</option>
+                                    <option value="Tema Metropolitan">Tema Metropolitan</option>
+                                    <option value="Sekondi Takoradi Metropolitan">Sekondi Takoradi Metropolitan</option>
+                                    <option value="Tamale Metropolitan">Tamale Metropolitan</option>
+                                    <option value="Cape Coast Metropolitan">Cape Coast Metropolitan</option>
+                                    <option value="Ho Municipal">Ho Municipal</option>
+                                    <option value="Sunyani Municipal">Sunyani Municipal</option>
+                                    <option value="Wa Municipal">Wa Municipal</option>
+                                    <option value="Bolgatanga Municipal">Bolgatanga Municipal</option>
+                                    <!-- Add more districts as needed -->
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="electoralArea">Electoral Area</label>
+                                <input type="text" id="electoralArea" name="electoralArea">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="streetName">Street Name</label>
+                                <input type="text" id="streetName" name="streetName">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="companyLocation">Company Location Details</label>
+                        <textarea id="companyLocation" name="companyLocation" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <!-- Step 2: Contact Information -->
+                <div class="step" data-step="2">
+                    <div class="step-title">👥 Contact Information</div>
+                    
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="contactPerson">Contact Person Name <span class="required">*</span></label>
+                                <input type="text" id="contactPerson" name="contactPerson" required>
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="contactPersonRole">Contact Person Role <span class="required">*</span></label>
+                                <input type="text" id="contactPersonRole" name="contactPersonRole" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="contactPhone">Contact Phone Number <span class="required">*</span></label>
+                                <input type="tel" id="contactPhone" name="contactPhone" required>
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="contactEmail">Contact Email</label>
+                                <input type="email" id="contactEmail" name="contactEmail">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="totalEmployees">Total Employees</label>
+                        <input type="number" id="totalEmployees" name="totalEmployees" min="0">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="ghanaianMale">Ghanaian Male</label>
+                                <input type="number" id="ghanaianMale" name="ghanaianMale" min="0" value="0">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="ghanaianFemale">Ghanaian Female</label>
+                                <input type="number" id="ghanaianFemale" name="ghanaianFemale" min="0" value="0">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="expatMale">Expatriate Male</label>
+                                <input type="number" id="expatMale" name="expatMale" min="0" value="0">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="expatFemale">Expatriate Female</label>
+                                <input type="number" id="expatFemale" name="expatFemale" min="0" value="0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: SSNIT Information -->
+                <div class="step" data-step="3">
+                    <div class="step-title">🏦 SSNIT Contribution Payments</div>
+                    
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="employerRegNumber">Employer Registration Number (ERNo)</label>
+                                <input type="text" id="employerRegNumber" name="employerRegNumber">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="ssnitBranch">Which SSNIT branch enforces compliance?</label>
+                                <input type="text" id="ssnitBranch" name="ssnitBranch">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="liaisonOfficer">Name and contact of SSNIT liaison officer</label>
+                        <input type="text" id="liaisonOfficer" name="liaisonOfficer">
+                    </div>
+                    
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="allEmployeesRegistered" name="allEmployeesRegistered">
+                            <label for="allEmployeesRegistered">Are all employees registered with SSNIT?</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="validSSNITNumbers" name="validSSNITNumbers">
+                            <label for="validSSNITNumbers">Do all employees have valid SSNIT numbers?</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="monthlyReports" name="monthlyReports">
+                            <label for="monthlyReports">Do you submit contribution reports monthly?</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="timelyPayments" name="timelyPayments">
+                            <label for="timelyPayments">Is contribution payment made by the 14th?</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="actualSalaries" name="actualSalaries">
+                            <label for="actualSalaries">Are contributions based on actual basic salaries?</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="outstandingArrears" name="outstandingArrears">
+                            <label for="outstandingArrears">Are there outstanding arrears or penalties?</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Immigration Documentation -->
+                <div class="step" data-step="4">
+                    <div class="step-title">📋 Immigration Documentation for Expatriates</div>
+                    
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="validPassport" name="validPassport">
+                            <label for="validPassport">Valid Passport</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="entryVisa" name="entryVisa">
+                            <label for="entryVisa">Entry Visa or Permit</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="residencePermit" name="residencePermit">
+                            <label for="residencePermit">Residence Permit</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="workPermit" name="workPermit">
+                            <label for="workPermit">Work Permit</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="nonCitizenID" name="nonCitizenID">
+                            <label for="nonCitizenID">Non-Citizen ID Card</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="employmentContract" name="employmentContract">
+                            <label for="employmentContract">Employment Contract</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="gisApproval" name="gisApproval">
+                            <label for="gisApproval">GIS Work Permit Approval Letter</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="expatTIN" name="expatTIN">
+                            <label for="expatTIN">Tax Identification Number (TIN)</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5: Labour Information -->
+                <div class="step" data-step="5">
+                    <div class="step-title">👷 Labour Information</div>
+                    
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="contractsSigned" name="contractsSigned">
+                            <label for="contractsSigned">Have all employees signed their appointment contract?</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="contractCopies" name="contractCopies">
+                            <label for="contractCopies">Have all employees received a copy of their contract?</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="overtimeWork" name="overtimeWork">
+                            <label for="overtimeWork">Do your workers work overtime?</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="overtimePaid" name="overtimePaid">
+                            <label for="overtimePaid">Is overtime paid?</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="weeklyRest" name="weeklyRest">
+                            <label for="weeklyRest">Do your workers get weekly rest days?</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="annualLeave" name="annualLeave">
+                            <label for="annualLeave">Do employees get annual leave with pay?</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="timelyPayment" name="timelyPayment">
+                            <label for="timelyPayment">Are your workers paid on time?</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="paySlips" name="paySlips">
+                            <label for="paySlips">Do you issue pay slips or payment records?</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="hoursPerDay">Hours worked per day</label>
+                                <input type="number" id="hoursPerDay" name="hoursPerDay" min="1" max="24">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="paymentFrequency">Payment frequency</label>
+                                <select id="paymentFrequency" name="paymentFrequency">
+                                    <option value="">Select frequency</option>
+                                    <option value="daily">Daily</option>
+                                    <option value="weekly">Weekly</option>
+                                    <option value="monthly">Monthly</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 6: Reporting Injury -->
+                <div class="step" data-step="6">
+                    <div class="step-title">🚑 Reporting Injury</div>
+                    
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="injuryProcedure" name="injuryProcedure">
+                            <label for="injuryProcedure">Have you established a formal procedure for employees to report work-related injuries?</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="procedureDocumented" name="procedureDocumented">
+                            <label for="procedureDocumented">Is the procedure documented and accessible to employees?</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="employeesTrained" name="employeesTrained">
+                            <label for="employeesTrained">Have you trained your employees on how to report injuries?</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="responsibleOfficer" name="responsibleOfficer">
+                            <label for="responsibleOfficer">Do you have a specific officer responsible for receiving injury reports?</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="injuryLog" name="injuryLog">
+                            <label for="injuryLog">Do you have a written log where all reported injuries are recorded?</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="reportToLabour" name="reportToLabour">
+                            <label for="reportToLabour">Do you report serious injuries to the Office of the Chief Labour Officer?</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="responsibleOfficerDetails">If yes, provide name and contact of responsible officer</label>
+                        <input type="text" id="responsibleOfficerDetails" name="responsibleOfficerDetails">
+                    </div>
+                </div>
+
+                <!-- Step 7: Grievances/Complaints -->
+                <div class="step" data-step="7">
+                    <div class="step-title">⚖️ Grievances/Complaints Resolution</div>
+                    
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="unpaidWork" name="unpaidWork">
+                            <label for="unpaidWork">Was there ever a time you didn't pay for work done?</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="wageComplaints" name="wageComplaints">
+                            <label for="wageComplaints">Have you ever received complaints about wages?</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="fairWages" name="fairWages">
+                            <label for="fairWages">Do you feel the wages you pay is fair for work done?</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="grievanceMechanism" name="grievanceMechanism">
+                            <label for="grievanceMechanism">Do you have a grievance redress mechanism?</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="recentComplaints" name="recentComplaints">
+                            <label for="recentComplaints">Have you received any complaints in the past three months?</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="complaintsResponse">If yes, what was your response?</label>
+                        <textarea id="complaintsResponse" name="complaintsResponse" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <!-- Step 8: Records and Documents -->
+                <div class="step" data-step="8">
+                    <div class="step-title">📄 Records and Documents Inspected</div>
+                    
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="payrollRecords" name="payrollRecords">
+                            <label for="payrollRecords">Payroll Records</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="attendanceBook" name="attendanceBook">
+                            <label for="attendanceBook">Staff Attendance Book</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="paymentReceipts" name="paymentReceipts">
+                            <label for="paymentReceipts">Payment Receipts</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="contributionReport" name="contributionReport">
+                            <label for="contributionReport">SSNIT Contribution Report</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="bankPaymentReceipts" name="bankPaymentReceipts">
+                            <label for="bankPaymentReceipts">Bank Payment Receipts</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="ssnitCorrespondence" name="ssnitCorrespondence">
+                            <label for="ssnitCorrespondence">Correspondence with SSNIT</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="auditReports" name="auditReports">
+                            <label for="auditReports">Internal Audit Reports on Compensation & Benefits</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 9: Certificates/Permits -->
+                <div class="step" data-step="9">
+                    <div class="step-title">📜 Certificates/Permits Inspected</div>
+                    
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="labourCertificate" name="labourCertificate">
+                            <label for="labourCertificate">Labour Certificate (Labour Department)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="factoriesCertificate" name="factoriesCertificate">
+                            <label for="factoriesCertificate">Factories, Offices & Shops Certificate</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="investmentCertificate" name="investmentCertificate">
+                            <label for="investmentCertificate">Investment Certificate (GIPC)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="incorporationCertificate" name="incorporationCertificate">
+                            <label for="incorporationCertificate">Certificate of Incorporation (RGD)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="commenceCertificate" name="commenceCertificate">
+                            <label for="commenceCertificate">Certificate to Commence Business (RGD)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="environmentalPermit" name="environmentalPermit">
+                            <label for="environmentalPermit">Environmental Permit (EPA)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="fireCertificate" name="fireCertificate">
+                            <label for="fireCertificate">Fire Certificate (GNFS)</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="violationDetails">Violations found and details</label>
+                        <textarea id="violationDetails" name="violationDetails" rows="4" placeholder="Describe any violations found..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Step 10: Inspector Information -->
+                <div class="step" data-step="10">
+                    <div class="step-title">👤 Inspector Information</div>
+                    
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="inspectorID">Inspector ID <span class="required">*</span></label>
+                                <input type="text" id="inspectorID" name="inspectorID" required placeholder="e.g., INS001, LAB-GH-001" style="text-transform: uppercase;">
+                                <small style="color: #666; font-size: 0.8em;">Use your official inspector ID number</small>
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="inspectorName">Name of Inspector <span class="required">*</span></label>
+                                <input type="text" id="inspectorName" name="inspectorName" required placeholder="First Last" onblur="validateInspectorName()">
+                                <div id="inspectorSuggestions" style="display: none; margin-top: 5px; padding: 8px; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 4px; font-size: 0.9em;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="inspectionDate">Inspection Date <span class="required">*</span></label>
+                                <input type="date" id="inspectionDate" name="inspectionDate" required>
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="supervisorSignature">Supervisor's Name</label>
+                                <input type="text" id="supervisorSignature" name="supervisorSignature">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="inspectorComments">Inspector Comments</label>
+                        <textarea id="inspectorComments" name="inspectorComments" rows="4" placeholder="Add any additional comments or observations..."></textarea>
+                    </div>
+                    
+                    <!-- Form Summary -->
+                    <div class="form-summary">
+                        <h4>📋 Inspection Summary</h4>
+                        <div class="summary-item">
+                            <span class="summary-label">Company:</span>
+                            <span class="summary-value" id="summaryCompany">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">District:</span>
+                            <span class="summary-value" id="summaryDistrict">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Contact:</span>
+                            <span class="summary-value" id="summaryContact">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Total Employees:</span>
+                            <span class="summary-value" id="summaryEmployees">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Inspector:</span>
+                            <span class="summary-value" id="summaryInspector">-</span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button type="button" class="btn btn-danger nav-btn" onclick="cancelForm()">❌ Cancel</button>
+            <button type="button" class="btn btn-secondary nav-btn" id="prevBtn" onclick="previousStep()" style="display: none;">← Previous</button>
+            <button type="button" class="btn btn-primary nav-btn" id="nextBtn" onclick="nextStep()">Next →</button>
+            <button type="button" class="btn btn-success nav-btn" id="submitBtn" onclick="submitForm()" style="display: none;">💾 Save</button>
+        </div>
+
+        <!-- Action Buttons (shown after submission) -->
+        <div class="action-buttons hidden" id="actionButtons">
+            <button type="button" class="btn btn-success" onclick="exportToCSV()">📊 Export to CSV</button>
+            <button type="button" class="btn btn-info" onclick="viewSavedForms()">📁 View Saved Forms</button>
+            <button type="button" class="btn btn-warning" onclick="shareData()">📱 Share Data</button>
+            <button type="button" class="btn btn-secondary" onclick="goHome()">🏠 Home</button>
+        </div>
+    </div>
+
+    <!-- Saved Forms Modal -->
+    <div class="modal" id="savedFormsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📁 Saved Labour Inspections</h3>
+            </div>
+            <div class="modal-body" id="savedFormsList">
+                <!-- Saved forms will be populated here -->
+            </div>
+            <div style="padding: 20px; text-align: center;">
+                <button type="button" class="btn btn-secondary" onclick="closeSavedFormsModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 10;
+        let currentLocationData = {
+            coordinates: null,
+            method: null,
+            description: null
+        };
+
+        // Initialize form
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress();
+            document.getElementById('inspectionDate').value = new Date().toISOString().split('T')[0];
+            
+            // Auto-save functionality
+            const form = document.getElementById('labourForm');
+            form.addEventListener('input', debounce(autoSave, 2000));
+        });
+
+        function updateProgress() {
+            const progress = (currentStep / totalSteps) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('currentStep').textContent = currentStep;
+            document.getElementById('totalSteps').textContent = totalSteps;
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').style.display = currentStep > 1 ? 'block' : 'none';
+            document.getElementById('nextBtn').style.display = currentStep < totalSteps ? 'block' : 'none';
+            document.getElementById('submitBtn').style.display = currentStep === totalSteps ? 'block' : 'none';
+            
+            // Update summary if on last step
+            if (currentStep === totalSteps) {
+                updateSummary();
+            }
+        }
+
+        function nextStep() {
+            if (validateCurrentStep()) {
+                if (currentStep < totalSteps) {
+                    document.querySelector(`.step[data-step="${currentStep}"]`).classList.remove('active');
+                    currentStep++;
+                    document.querySelector(`.step[data-step="${currentStep}"]`).classList.add('active');
+                    updateProgress();
+                    window.scrollTo(0, 0);
+                }
+            }
+        }
+
+        function previousStep() {
+            if (currentStep > 1) {
+                document.querySelector(`.step[data-step="${currentStep}"]`).classList.remove('active');
+                currentStep--;
+                document.querySelector(`.step[data-step="${currentStep}"]`).classList.add('active');
+                updateProgress();
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function validateCurrentStep() {
+            const currentStepElement = document.querySelector(`.step[data-step="${currentStep}"]`);
+            const requiredFields = currentStepElement.querySelectorAll('[required]');
+            
+            for (let field of requiredFields) {
+                if (!field.value.trim()) {
+                    field.focus();
+                    alert(`Please fill in the required field: ${field.previousElementSibling.textContent.replace('*', '').trim()}`);
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function updateSummary() {
+            document.getElementById('summaryCompany').textContent = document.getElementById('companyName').value || '-';
+            document.getElementById('summaryDistrict').textContent = document.getElementById('district').value || '-';
+            document.getElementById('summaryContact').textContent = document.getElementById('contactPerson').value || '-';
+            document.getElementById('summaryEmployees').textContent = document.getElementById('totalEmployees').value || '-';
+            document.getElementById('summaryInspector').textContent = document.getElementById('inspectorName').value || '-';
+        }
+
+        // Inspector name validation and suggestions
+        function validateInspectorName() {
+            const inspectorName = document.getElementById('inspectorName').value.trim();
+            const suggestionDiv = document.getElementById('inspectorSuggestions');
+            
+            if (inspectorName.length < 2) {
+                suggestionDiv.style.display = 'none';
+                return;
+            }
+            
+            // Get known inspectors from localStorage
+            const knownInspectors = getKnownInspectors();
+            
+            // Find similar names using fuzzy matching
+            const suggestions = findSimilarNames(inspectorName, knownInspectors);
+            
+            if (suggestions.length > 0) {
+                suggestionDiv.innerHTML = `
+                    <strong>💡 Did you mean?</strong><br>
+                    ${suggestions.map(name => `<a href="#" onclick="selectInspectorName('${name}')" style="color: #856404; text-decoration: underline; margin-right: 10px;">${name}</a>`).join('')}
+                `;
+                suggestionDiv.style.display = 'block';
+            } else {
+                // Add new inspector to known list
+                addKnownInspector(inspectorName);
+                suggestionDiv.style.display = 'none';
+            }
+        }
+        
+        function selectInspectorName(name) {
+            document.getElementById('inspectorName').value = name;
+            document.getElementById('inspectorSuggestions').style.display = 'none';
+        }
+        
+        function getKnownInspectors() {
+            return JSON.parse(localStorage.getItem('known_inspectors') || '[]');
+        }
+        
+        function addKnownInspector(name) {
+            const knownInspectors = getKnownInspectors();
+            const normalizedName = normalizeName(name);
+            
+            if (!knownInspectors.some(inspector => normalizeName(inspector) === normalizedName)) {
+                knownInspectors.push(name);
+                localStorage.setItem('known_inspectors', JSON.stringify(knownInspectors));
+            }
+        }
+        
+        function normalizeName(name) {
+            return name.toLowerCase().replace(/[^a-z\s]/g, '').replace(/\s+/g, ' ').trim();
+        }
+        
+        function findSimilarNames(input, knownNames) {
+            const normalizedInput = normalizeName(input);
+            const suggestions = [];
+            
+            knownNames.forEach(name => {
+                const normalizedName = normalizeName(name);
+                const similarity = calculateSimilarity(normalizedInput, normalizedName);
+                
+                if (similarity > 0.6 && normalizedInput !== normalizedName) {
+                    suggestions.push(name);
+                }
+            });
+            
+            return suggestions.slice(0, 3); // Return top 3 suggestions
+        }
+        
+        function calculateSimilarity(str1, str2) {
+            const longer = str1.length > str2.length ? str1 : str2;
+            const shorter = str1.length > str2.length ? str2 : str1;
+            
+            if (longer.length === 0) return 1.0;
+            
+            const distance = levenshteinDistance(longer, shorter);
+            return (longer.length - distance) / longer.length;
+        }
+        
+        function levenshteinDistance(str1, str2) {
+            const matrix = [];
+            
+            for (let i = 0; i <= str2.length; i++) {
+                matrix[i] = [i];
+            }
+            
+            for (let j = 0; j <= str1.length; j++) {
+                matrix[0][j] = j;
+            }
+            
+            for (let i = 1; i <= str2.length; i++) {
+                for (let j = 1; j <= str1.length; j++) {
+                    if (str2.charAt(i - 1) === str1.charAt(j - 1)) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(
+                            matrix[i - 1][j - 1] + 1,
+                            matrix[i][j - 1] + 1,
+                            matrix[i - 1][j] + 1
+                        );
+                    }
+                }
+            }
+            
+            return matrix[str2.length][str1.length];
+        }
+
+        function getFormData() {
+            const formData = {};
+            const form = document.getElementById('labourForm');
+            
+            // Get all form elements
+            const elements = form.querySelectorAll('input, select, textarea');
+            elements.forEach(element => {
+                if (element.type === 'checkbox') {
+                    formData[element.name] = element.checked ? 'Yes' : 'No';
+                } else {
+                    formData[element.name] = element.value || '';
+                }
+            });
+            
+            // Add location data
+            formData.gpsCoordinates = currentLocationData.coordinates || document.getElementById('manualCoordinates').value || '';
+            formData.locationMethod = currentLocationData.method || (document.getElementById('manualCoordinates').value ? 'Manual' : '');
+            
+            // Add metadata
+            formData.formType = 'Labour Inspection';
+            formData.submissionTime = new Date().toISOString();
+            formData.formId = 'LABOUR_' + Date.now();
+            
+            return formData;
+        }
+
+        function submitForm() {
+            if (!validateCurrentStep()) {
+                return;
+            }
+            
+            const formData = getFormData();
+            
+            // Get saved forms
+            let savedForms = JSON.parse(localStorage.getItem('labour_inspections') || '[]');
+            savedForms.push(formData);
+            
+            // Save to localStorage
+            localStorage.setItem('labour_inspections', JSON.stringify(savedForms));
+            
+            // Clear auto-save
+            localStorage.removeItem('labour_form_autosave');
+            
+            // Show success message and action buttons
+            alert(`✅ Labour inspection saved successfully!\n\nCompany: ${formData.companyName}\nTotal saved: ${savedForms.length} inspections`);
+            
+            // Hide form and show action buttons
+            document.querySelector('.form-container').style.display = 'none';
+            document.querySelector('.navigation').style.display = 'none';
+            document.getElementById('actionButtons').classList.remove('hidden');
+        }
+
+        function autoSave() {
+            const formData = getFormData();
+            formData.autoSaved = true;
+            formData.lastAutoSave = new Date().toISOString();
+            localStorage.setItem('labour_form_autosave', JSON.stringify(formData));
+        }
+
+        function cancelForm() {
+            if (confirm('Are you sure you want to cancel? All unsaved data will be lost.')) {
+                localStorage.removeItem('labour_form_autosave');
+                window.location.href = 'index.html'; // Return to home screen
+            }
+        }
+
+        function goHome() {
+            window.location.href = 'index.html';
+        }
+
+        function startNewForm() {
+            // Reset form
+            document.getElementById('labourForm').reset();
+            document.getElementById('inspectionDate').value = new Date().toISOString().split('T')[0];
+            
+            // Reset step
+            document.querySelector(`.step[data-step="${currentStep}"]`).classList.remove('active');
+            currentStep = 1;
+            document.querySelector(`.step[data-step="${currentStep}"]`).classList.add('active');
+            
+            // Show form, hide action buttons
+            document.querySelector('.form-container').style.display = 'block';
+            document.querySelector('.navigation').style.display = 'flex';
+            document.getElementById('actionButtons').classList.add('hidden');
+            
+            // Reset location data
+            currentLocationData = { coordinates: null, method: null, description: null };
+            updateLocationStatus('📍 Choose a method to get location coordinates', 'warning');
+            
+            updateProgress();
+            window.scrollTo(0, 0);
+        }
+
+        function exportToCSV() {
+            const savedForms = JSON.parse(localStorage.getItem('labour_inspections') || '[]');
+            
+            if (savedForms.length === 0) {
+                alert('No saved forms to export.');
+                return;
+            }
+            
+            // Create CSV content
+            const headers = Object.keys(savedForms[0]);
+            let csvContent = headers.join(',') + '\n';
+            
+            savedForms.forEach(form => {
+                const row = headers.map(header => {
+                    const value = form[header] || '';
+                    return '"' + String(value).replace(/"/g, '""') + '"';
+                });
+                csvContent += row.join(',') + '\n';
+            });
+            
+            // Download CSV file with date tag
+            const dateTag = new Date().toISOString().split('T')[0];
+            const filename = `Labour_Inspections_${dateTag}.csv`;
+            
+            downloadCSVFile(csvContent, filename);
+            
+            alert(`✅ Exported ${savedForms.length} labour inspection records to ${filename}`);
+        }
+        
+        function shareData() {
+            const savedForms = JSON.parse(localStorage.getItem('labour_inspections') || '[]');
+            
+            if (savedForms.length === 0) {
+                alert('No data to share. Please save some inspection forms first.');
+                return;
+            }
+            
+            // Create CSV content
+            const headers = Object.keys(savedForms[0]);
+            let csvContent = headers.join(',') + '\n';
+            
+            savedForms.forEach(form => {
+                const row = headers.map(header => {
+                    const value = form[header] || '';
+                    return '"' + String(value).replace(/"/g, '""') + '"';
+                });
+                csvContent += row.join(',') + '\n';
+            });
+            
+            const dateTag = new Date().toISOString().split('T')[0];
+            const filename = `Labour_Inspections_${dateTag}.csv`;
+            
+            // Try Web Share API first (modern browsers)
+            if (navigator.share && navigator.canShare) {
+                shareViaWebAPI(csvContent, filename, 'Labour Inspections');
+            } else {
+                // Fallback to custom share modal
+                showShareModal(csvContent, filename, 'Labour Inspections');
+            }
+        }
+        
+        function shareViaWebAPI(csvContent, filename, title) {
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const file = new File([blob], filename, { type: 'text/csv' });
+            
+            if (navigator.canShare({ files: [file] })) {
+                navigator.share({
+                    title: title,
+                    text: `${title} data exported on ${new Date().toLocaleDateString()}`,
+                    files: [file]
+                }).catch(err => {
+                    console.log('Error sharing:', err);
+                    showShareModal(csvContent, filename, title);
+                });
+            } else {
+                showShareModal(csvContent, filename, title);
+            }
+        }
+        
+        function showShareModal(csvContent, filename, title) {
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = window.URL.createObjectURL(blob);
+            const summary = `${title} data exported on ${new Date().toLocaleDateString()}`;
+            
+            const modalHTML = `
+                <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; justify-content: center; align-items: center;" onclick="closeShareModal(this)">
+                    <div style="background: white; padding: 30px; border-radius: 15px; max-width: 400px; width: 90%; text-align: center;" onclick="event.stopPropagation()">
+                        <h3 style="margin-bottom: 20px;">📱 Share Data</h3>
+                        <p style="margin-bottom: 20px; color: #666;">${summary}</p>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 15px;">
+                            <button class="btn btn-success" onclick="shareViaWhatsApp('${encodeURIComponent(summary)}', '${filename}')">
+                                📱 Share via WhatsApp
+                            </button>
+                            <button class="btn btn-info" onclick="shareViaEmail('${encodeURIComponent(summary)}', '${filename}')">
+                                📧 Share via Email
+                            </button>
+                            <button class="btn btn-primary" onclick="downloadFile('${url}', '${filename}')">
+                                📥 Download File
+                            </button>
+                            <button class="btn btn-secondary" onclick="closeShareModal(this.closest('[onclick*=closeShareModal]'))">
+                                ❌ Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+            
+            // Store the blob URL for download
+            window.tempCSVUrl = url;
+            window.tempCSVFilename = filename;
+        }
+        
+        function shareViaWhatsApp(summary, filename) {
+            const message = `${decodeURIComponent(summary)}\n\nFile: ${filename}\n\nSent from Labour Inspection Mobile App`;
+            const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
+            
+            // Open WhatsApp
+            window.open(whatsappUrl, '_blank');
+            
+            // Also download the file so user can manually attach it
+            if (window.tempCSVUrl) {
+                downloadFile(window.tempCSVUrl, window.tempCSVFilename);
+            }
+            
+            alert('📱 WhatsApp opened with message.\n📎 CSV file downloaded - attach it to your WhatsApp message.');
+        }
+        
+        function shareViaEmail(summary, filename) {
+            const subject = 'Labour Inspection Data Export';
+            const body = `${decodeURIComponent(summary)}\n\nPlease find the attached CSV file containing the labour inspection data.\n\nFile: ${filename}\n\nSent from Labour Inspection Mobile App`;
+            const mailtoUrl = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            
+            // Open email app
+            window.open(mailtoUrl, '_blank');
+            
+            // Also download the file so user can manually attach it
+            if (window.tempCSVUrl) {
+                downloadFile(window.tempCSVUrl, window.tempCSVFilename);
+            }
+            
+            alert('📧 Email app opened with message.\n📎 CSV file downloaded - attach it to your email.');
+        }
+        
+        function downloadFile(url, filename) {
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+        
+        function closeShareModal(modal) {
+            if (window.tempCSVUrl) {
+                window.URL.revokeObjectURL(window.tempCSVUrl);
+                delete window.tempCSVUrl;
+                delete window.tempCSVFilename;
+            }
+            modal.remove();
+        }
+        
+        function downloadCSVFile(csvContent, filename) {
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        function viewSavedForms() {
+            const savedForms = JSON.parse(localStorage.getItem('labour_inspections') || '[]');
+            const modalBody = document.getElementById('savedFormsList');
+            
+            if (savedForms.length === 0) {
+                modalBody.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">No saved forms found.</p>';
+            } else {
+                modalBody.innerHTML = savedForms.map((form, index) => {
+                    const date = new Date(form.submissionTime).toLocaleDateString();
+                    const time = new Date(form.submissionTime).toLocaleTimeString();
+                    return `
+                        <div class="saved-form-item">
+                            <div class="saved-form-title">${form.companyName || 'Unnamed Company'}</div>
+                            <div class="saved-form-details">
+                                📅 ${date} ${time}<br>
+                                👤 Inspector: ${form.inspectorName || 'Unknown'}<br>
+                                📍 District: ${form.district || 'Unknown'}<br>
+                                🏢 Contact: ${form.contactPerson || 'No contact'}<br>
+                                👥 Employees: ${form.totalEmployees || 'Not specified'}
+                                ${form.gpsCoordinates ? '<br>🗺️ GPS: ' + form.gpsCoordinates : ''}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            document.getElementById('savedFormsModal').style.display = 'block';
+        }
+
+        function closeSavedFormsModal() {
+            document.getElementById('savedFormsModal').style.display = 'none';
+        }
+
+        // Location functions
+        function getGPSLocation() {
+            if ("geolocation" in navigator) {
+                updateLocationStatus('🔍 Getting GPS location...', 'warning');
+                
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        const lat = position.coords.latitude.toFixed(6);
+                        const lon = position.coords.longitude.toFixed(6);
+                        currentLocationData.coordinates = `${lat}, ${lon}`;
+                        currentLocationData.method = 'GPS';
+                        document.getElementById('manualCoordinates').value = `${lat}, ${lon}`;
+                        updateLocationStatus(`✅ GPS coordinates: ${lat}, ${lon}`, 'success');
+                    },
+                    function(error) {
+                        updateLocationStatus('❌ GPS failed. Use manual entry.', 'error');
+                        alert('GPS failed. Please enter coordinates manually or use Google Maps.');
+                    },
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 10000,
+                        maximumAge: 300000
+                    }
+                );
+            } else {
+                alert('GPS not supported. Please enter coordinates manually.');
+            }
+        }
+
+        function openGoogleMaps() {
+            alert('1. Open Google Maps\n2. Find the company location\n3. Long press on the location\n4. Copy the coordinates\n5. Paste them in the coordinates field');
+            window.open('https://maps.google.com', '_blank');
+        }
+
+        function updateLocationDisplay() {
+            const coords = document.getElementById('manualCoordinates').value;
+            if (coords && coords.includes(',')) {
+                currentLocationData.coordinates = coords.trim();
+                currentLocationData.method = 'Manual';
+                updateLocationStatus(`✅ Coordinates entered: ${coords.trim()}`, 'success');
+            }
+        }
+
+        function updateLocationStatus(message, type) {
+            const statusDiv = document.getElementById('locationStatus');
+            statusDiv.textContent = message;
+            statusDiv.className = `location-status location-${type}`;
+        }
+
+        function filterDistricts() {
+            const searchTerm = document.getElementById('districtSearch').value.toLowerCase();
+            const select = document.getElementById('district');
+            const options = select.options;
+            
+            for (let i = 1; i < options.length; i++) {
+                const option = options[i];
+                const text = option.text.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    option.style.display = '';
+                } else {
+                    option.style.display = 'none';
+                }
+            }
+        }
+
+        // Utility functions
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('savedFormsModal');
+            if (event.target === modal) {
+                closeSavedFormsModal();
+            }
+        }
+    </script>
+</body>
+</html>

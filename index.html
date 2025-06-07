@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Labour Inspection Forms</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 3em;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1em;
+            line-height: 1.4;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            padding: 15px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .stat-item {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .stat-number {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-number.labour {
+            color: #2c5f2d;
+        }
+        
+        .stat-number.safety {
+            color: #dc3545;
+        }
+        
+        .stat-number.total {
+            color: #17a2b8;
+        }
+        
+        .stat-label {
+            font-size: 0.85em;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .form-button {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            margin: 15px 0;
+            color: white;
+            text-decoration: none;
+            border-radius: 15px;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .form-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .form-button:hover::before {
+            left: 100%;
+        }
+        
+        .form-button:hover {
+            transform: translateY(-3px);
+        }
+        
+        .form-button.labour {
+            background: linear-gradient(135deg, #2c5f2d, #4a7c59);
+            box-shadow: 0 5px 15px rgba(44, 95, 45, 0.3);
+        }
+        
+        .form-button.labour:hover {
+            box-shadow: 0 8px 25px rgba(44, 95, 45, 0.4);
+        }
+        
+        .form-button.safety {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+        }
+        
+        .form-button.safety:hover {
+            box-shadow: 0 8px 25px rgba(220, 53, 69, 0.4);
+        }
+        
+        .form-button.view {
+            background: linear-gradient(135deg, #17a2b8, #138496);
+            box-shadow: 0 5px 15px rgba(23, 162, 184, 0.3);
+        }
+        
+        .form-button.view:hover {
+            box-shadow: 0 8px 25px rgba(23, 162, 184, 0.4);
+        }
+        
+        .form-button.export {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+        
+        .form-button.export:hover {
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+        }
+        
+        .form-button.export-safety {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+        }
+        
+        .form-button.export-safety:hover {
+            box-shadow: 0 8px 25px rgba(220, 53, 69, 0.4);
+        }
+        
+        .form-button.danger {
+            background: linear-gradient(135deg, #fd7e14, #e63946);
+            box-shadow: 0 5px 15px rgba(253, 126, 20, 0.3);
+        }
+        
+        .form-button.danger:hover {
+            box-shadow: 0 8px 25px rgba(253, 126, 20, 0.4);
+        }
+        
+        .button-icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        
+        .button-text {
+            vertical-align: middle;
+        }
+        
+        .button-description {
+            display: block;
+            font-size: 0.85em;
+            opacity: 0.9;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            color: #999;
+            font-size: 0.9em;
+        }
+        
+        .last-export {
+            background: #e8f5e8;
+            border: 1px solid #c3e6cb;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 15px 0;
+            font-size: 0.9em;
+            color: #155724;
+        }
+        
+        .no-data {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 15px 0;
+            font-size: 0.9em;
+            color: #856404;
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            margin: 20px;
+            border-radius: 15px;
+            max-width: 400px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .saved-form-item {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .saved-form-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        .saved-form-details {
+            font-size: 0.9em;
+            color: #6c757d;
+            line-height: 1.4;
+        }
+        
+        .saved-form-type {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .type-labour {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .type-safety {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .form-button {
+                padding: 16px;
+                font-size: 1em;
+            }
+            
+            .button-icon {
+                font-size: 1.3em;
+                margin-right: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🏛️</div>
+        <h1>Labour Inspection</h1>
+        <p class="subtitle">Ministry of Labour, Jobs and Employment<br>Digital Inspection Forms</p>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number labour" id="labourCount">0</div>
+                <div class="stat-label">Labour Forms</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number safety" id="safetyCount">0</div>
+                <div class="stat-label">Safety Forms</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number total" id="totalCount">0</div>
+                <div class="stat-label">Total Saved</div>
+            </div>
+        </div>
+        
+        <div id="lastExportInfo"></div>
+        
+        <button class="form-button labour" onclick="openForm('labour')">
+            <span class="button-icon">📋</span>
+            <span class="button-text">
+                Labour Inspection Form
+                <span class="button-description">Employee conditions, SSNIT, immigration docs</span>
+            </span>
+        </button>
+        
+        <button class="form-button safety" onclick="openForm('safety')">
+            <span class="button-icon">🔒</span>
+            <span class="button-text">
+                Health & Safety Form
+                <span class="button-description">Workplace safety, fire protection, equipment</span>
+            </span>
+        </button>
+        
+        <button class="form-button view" onclick="viewSavedForms()">
+            <span class="button-icon">📁</span>
+            <span class="button-text">
+                View Saved Forms
+                <span class="button-description">Browse all completed inspections</span>
+            </span>
+        </button>
+        
+        <button class="form-button export" onclick="exportLabourData()" id="exportLabourBtn">
+            <span class="button-icon">📋</span>
+            <span class="button-text">
+                Export Labour Data
+                <span class="button-description">Download labour inspection CSV</span>
+            </span>
+        </button>
+        
+        <button class="form-button export-safety" onclick="exportSafetyData()" id="exportSafetyBtn">
+            <span class="button-icon">🔒</span>
+            <span class="button-text">
+                Export Safety Data
+                <span class="button-description">Download safety inspection CSV</span>
+            </span>
+        </button>
+        
+        <button class="form-button view" onclick="shareAllData()" id="shareAllBtn">
+            <span class="button-icon">📱</span>
+            <span class="button-text">
+                Share All Data
+                <span class="button-description">Share via WhatsApp or Email</span>
+            </span>
+        </button>
+        
+        <button class="form-button danger" onclick="confirmClearAll()" id="clearBtn">
+            <span class="button-icon">🗑️</span>
+            <span class="button-text">
+                Clear All Data
+                <span class="button-description">Remove all saved forms</span>
+            </span>
+        </button>
+        
+        <div class="footer">
+            <p>Step-by-step guided inspection forms</p>
+            <p>Version 3.0 • Offline Capable</p>
+        </div>
+    </div>
+
+    <!-- Saved Forms Modal -->
+    <div class="modal" id="savedFormsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📁 All Saved Inspections</h3>
+            </div>
+            <div class="modal-body" id="savedFormsList">
+                <!-- Content will be populated here -->
+            </div>
+            <div style="padding: 20px; text-align: center;">
+                <button class="form-button view" onclick="closeSavedFormsModal()" style="margin: 0;">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update saved form counts and last export info
+        function updateStats() {
+            const labourForms = JSON.parse(localStorage.getItem('labour_inspections') || '[]');
+            const safetyForms = JSON.parse(localStorage.getItem('safety_inspections') || '[]');
+            const lastExport = localStorage.getItem('last_export_date');
+            
+            document.getElementById('labourCount').textContent = labourForms.length;
+            document.getElementById('safetyCount').textContent = safetyForms.length;
+            document.getElementById('totalCount').textContent = labourForms.length + safetyForms.length;
+            
+            // Update export button states
+            const exportLabourBtn = document.getElementById('exportLabourBtn');
+            const exportSafetyBtn = document.getElementById('exportSafetyBtn');
+            const shareAllBtn = document.getElementById('shareAllBtn');
+            const clearBtn = document.getElementById('clearBtn');
+            const lastExportInfo = document.getElementById('lastExportInfo');
+            
+            // Labour export button
+            if (labourForms.length === 0) {
+                exportLabourBtn.style.opacity = '0.5';
+                exportLabourBtn.style.pointerEvents = 'none';
+            } else {
+                exportLabourBtn.style.opacity = '1';
+                exportLabourBtn.style.pointerEvents = 'auto';
+            }
+            
+            // Safety export button
+            if (safetyForms.length === 0) {
+                exportSafetyBtn.style.opacity = '0.5';
+                exportSafetyBtn.style.pointerEvents = 'none';
+            } else {
+                exportSafetyBtn.style.opacity = '1';
+                exportSafetyBtn.style.pointerEvents = 'auto';
+            }
+            
+            // Share all button
+            if (labourForms.length === 0 && safetyForms.length === 0) {
+                shareAllBtn.style.opacity = '0.5';
+                shareAllBtn.style.pointerEvents = 'none';
+                clearBtn.style.opacity = '0.5';
+                clearBtn.style.pointerEvents = 'none';
+                lastExportInfo.innerHTML = '<div class="no-data">📝 No inspection data available. Complete some forms first.</div>';
+            } else {
+                shareAllBtn.style.opacity = '1';
+                shareAllBtn.style.pointerEvents = 'auto';
+                clearBtn.style.opacity = '1';
+                clearBtn.style.pointerEvents = 'auto';
+                
+                if (lastExport) {
+                    const exportDate = new Date(lastExport).toLocaleDateString();
+                    const exportTime = new Date(lastExport).toLocaleTimeString();
+                    lastExportInfo.innerHTML = `<div class="last-export">📊 Last export: ${exportDate} at ${exportTime}</div>`;
+                } else {
+                    lastExportInfo.innerHTML = '';
+                }
+            }
+        }
+        
+        function openForm(type) {
+            if (type === 'labour') {
+                window.location.href = 'labour_form_steps.html';
+            } else if (type === 'safety') {
+                window.location.href = 'safety_form_steps.html';
+            }
+        }
+        
+        function viewSavedForms() {
+            const labourForms = JSON.parse(localStorage.getItem('labour_inspections') || '[]');
+            const safetyForms = JSON.parse(localStorage.getItem('safety_inspections') || '[]');
+            const modalBody = document.getElementById('savedFormsList');
+            
+            // Combine and sort forms by date
+            const allForms = [
+                ...labourForms.map(form => ({...form, type: 'labour'})),
+                ...safetyForms.map(form => ({...form, type: 'safety'}))
+            ].sort((a, b) => new Date(b.submissionTime) - new Date(a.submissionTime));
+            
+            if (allForms.length === 0) {
+                modalBody.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">No saved forms found.</p>';
+            } else {
+                modalBody.innerHTML = allForms.map((form, index) => {
+                    const date = new Date(form.submissionTime).toLocaleDateString();
+                    const time = new Date(form.submissionTime).toLocaleTimeString();
+                    const typeClass = form.type === 'labour' ? 'type-labour' : 'type-safety';
+                    const typeLabel = form.type === 'labour' ? 'Labour' : 'Safety';
+                    
+                    return `
+                        <div class="saved-form-item">
+                            <div class="saved-form-type ${typeClass}">${typeLabel}</div>
+                            <div class="saved-form-title">${form.companyName || 'Unnamed Company'}</div>
+                            <div class="saved-form-details">
+                                📅 ${date} ${time}<br>
+                                👤 Inspector: ${form.inspectorName || 'Unknown'}<br>
+                                📍 District: ${form.district || 'Unknown'}<br>
+                                🏢 Contact: ${form.contactPerson || 'No contact'}
+                                ${form.totalEmployees ? '<br>👥 Employees: ' + form.totalEmployees : ''}
+                                ${form.overallSafetyRating ? '<br>🔒 Safety Rating: ' + form.overallSafetyRating : ''}
+                                ${form.gpsCoordinates ? '<br>🗺️ GPS: ' + form.gpsCoordinates : ''}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            document.getElementById('savedFormsModal').style.display = 'flex';
+        }
+        
+        function closeSavedFormsModal() {
+            document.getElementById('savedFormsModal').style.display = 'none';
+        }
+        
+        function exportLabourData() {
+            const labourForms = JSON.parse(localStorage.getItem('labour_inspections') || '[]');
+            
+            if (labourForms.length === 0) {
+                alert('No labour inspection data to export. Please complete some labour forms first.');
+                return;
+            }
+            
+            // Create CSV content
+            const headers = Object.keys(labourForms[0]);
+            let csvContent = headers.join(',') + '\n';
+            
+            labourForms.forEach(form => {
+                const row = headers.map(header => {
+                    const value = form[header] || '';
+                    return '"' + String(value).replace(/"/g, '""') + '"';
+                });
+                csvContent += row.join(',') + '\n';
+            });
+            
+            // Download CSV file with date tag
+            const dateTag = new Date().toISOString().split('T')[0];
+            const filename = `Labour_Inspections_${dateTag}.csv`;
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            
+            // Save export date
+            localStorage.setItem('last_export_date', new Date().toISOString());
+            updateStats();
+            
+            alert(`✅ Exported ${labourForms.length} labour inspection records to ${filename}`);
+        }
+        
+        function exportSafetyData() {
+            const safetyForms = JSON.parse(localStorage.getItem('safety_inspections') || '[]');
+            
+            if (safetyForms.length === 0) {
+                alert('No safety inspection data to export. Please complete some safety forms first.');
+                return;
+            }
+            
+            // Create CSV content
+            const headers = Object.keys(safetyForms[0]);
+            let csvContent = headers.join(',') + '\n';
+            
+            safetyForms.forEach(form => {
+                const row = headers.map(header => {
+                    const value = form[header] || '';
+                    return '"' + String(value).replace(/"/g, '""') + '"';
+                });
+                csvContent += row.join(',') + '\n';
+            });
+            
+            // Download CSV file with date tag
+            const dateTag = new Date().toISOString().split('T')[0];
+            const filename = `Safety_Inspections_${dateTag}.csv`;
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            
+            // Save export date
+            localStorage.setItem('last_export_date', new Date().toISOString());
+            updateStats();
+            
+            alert(`🔒 Exported ${safetyForms.length} safety inspection records to ${filename}`);
+        }
+        
+        function shareAllData() {
+            const labourForms = JSON.parse(localStorage.getItem('labour_inspections') || '[]');
+            const safetyForms = JSON.parse(localStorage.getItem('safety_inspections') || '[]');
+            
+            if (labourForms.length === 0 && safetyForms.length === 0) {
+                alert('No data to share. Please complete some inspection forms first.');
+                return;
+            }
+            
+            // Show share options modal
+            const modalHTML = `
+                <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; justify-content: center; align-items: center;" onclick="closeShareOptionsModal(this)">
+                    <div style="background: white; padding: 30px; border-radius: 15px; max-width: 400px; width: 90%; text-align: center;" onclick="event.stopPropagation()">
+                        <h3 style="margin-bottom: 20px;">📱 Share Inspection Data</h3>
+                        <p style="margin-bottom: 20px; color: #666;">Choose what to share:</p>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 15px;">
+                            ${labourForms.length > 0 ? `
+                                <button class="form-button export" onclick="shareSpecificData('labour')" style="margin: 0; font-size: 0.9em;">
+                                    📋 Share Labour Data (${labourForms.length} forms)
+                                </button>
+                            ` : ''}
+                            ${safetyForms.length > 0 ? `
+                                <button class="form-button export-safety" onclick="shareSpecificData('safety')" style="margin: 0; font-size: 0.9em;">
+                                    🔒 Share Safety Data (${safetyForms.length} forms)
+                                </button>
+                            ` : ''}
+                            ${labourForms.length > 0 && safetyForms.length > 0 ? `
+                                <button class="form-button view" onclick="shareSpecificData('combined')" style="margin: 0; font-size: 0.9em;">
+                                    📊 Share Combined Data (${labourForms.length + safetyForms.length} forms)
+                                </button>
+                            ` : ''}
+                            <button class="form-button danger" onclick="closeShareOptionsModal(this.closest('[onclick*=closeShareOptionsModal]'))" style="margin: 0; font-size: 0.9em;">
+                                ❌ Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+        
+        function shareSpecificData(type) {
+            let csvContent = '';
+            let filename = '';
+            let title = '';
+            
+            const dateTag = new Date().toISOString().split('T')[0];
+            
+            if (type === 'labour') {
+                const labourForms = JSON.parse(localStorage.getItem('labour_inspections') || '[]');
+                const headers = Object.keys(labourForms[0]);
+                csvContent = headers.join(',') + '\n';
+                labourForms.forEach(form => {
+                    const row = headers.map(header => {
+                        const value = form[header] || '';
+                        return '"' + String(value).replace(/"/g, '""') + '"';
+                    });
+                    csvContent += row.join(',') + '\n';
+                });
+                filename = `Labour_Inspections_${dateTag}.csv`;
+                title = 'Labour Inspections';
+            } else if (type === 'safety') {
+                const safetyForms = JSON.parse(localStorage.getItem('safety_inspections') || '[]');
+                const headers = Object.keys(safetyForms[0]);
+                csvContent = headers.join(',') + '\n';
+                safetyForms.forEach(form => {
+                    const row = headers.map(header => {
+                        const value = form[header] || '';
+                        return '"' + String(value).replace(/"/g, '""') + '"';
+                    });
+                    csvContent += row.join(',') + '\n';
+                });
+                filename = `Safety_Inspections_${dateTag}.csv`;
+                title = 'Safety Inspections';
+            } else if (type === 'combined') {
+                const labourForms = JSON.parse(localStorage.getItem('labour_inspections') || '[]');
+                const safetyForms = JSON.parse(localStorage.getItem('safety_inspections') || '[]');
+                
+                // Combine all forms with type identifier
+                const allForms = [
+                    ...labourForms.map(form => ({...form, formCategory: 'Labour Inspection'})),
+                    ...safetyForms.map(form => ({...form, formCategory: 'Health & Safety Inspection'}))
+                ];
+                
+                const headers = ['formCategory', ...Object.keys(allForms[0]).filter(key => key !== 'formCategory')];
+                csvContent = headers.join(',') + '\n';
+                allForms.forEach(form => {
+                    const row = headers.map(header => {
+                        const value = form[header] || '';
+                        return '"' + String(value).replace(/"/g, '""') + '"';
+                    });
+                    csvContent += row.join(',') + '\n';
+                });
+                filename = `All_Inspections_${dateTag}.csv`;
+                title = 'All Inspections';
+            }
+            
+            // Close options modal first
+            closeShareOptionsModal(document.querySelector('[onclick*=closeShareOptionsModal]'));
+            
+            // Try Web Share API first (modern browsers)
+            if (navigator.share && navigator.canShare) {
+                shareViaWebAPI(csvContent, filename, title);
+            } else {
+                // Fallback to custom share modal
+                showShareModal(csvContent, filename, title);
+            }
+        }
+        
+        function shareViaWebAPI(csvContent, filename, title) {
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const file = new File([blob], filename, { type: 'text/csv' });
+            
+            if (navigator.canShare({ files: [file] })) {
+                navigator.share({
+                    title: title,
+                    text: `${title} data exported on ${new Date().toLocaleDateString()}`,
+                    files: [file]
+                }).catch(err => {
+                    console.log('Error sharing:', err);
+                    showShareModal(csvContent, filename, title);
+                });
+            } else {
+                showShareModal(csvContent, filename, title);
+            }
+        }
+        
+        function showShareModal(csvContent, filename, title) {
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = window.URL.createObjectURL(blob);
+            const summary = `${title} data exported on ${new Date().toLocaleDateString()}`;
+            
+            const modalHTML = `
+                <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; justify-content: center; align-items: center;" onclick="closeShareModal(this)">
+                    <div style="background: white; padding: 30px; border-radius: 15px; max-width: 400px; width: 90%; text-align: center;" onclick="event.stopPropagation()">
+                        <h3 style="margin-bottom: 20px;">📱 Share Data</h3>
+                        <p style="margin-bottom: 20px; color: #666;">${summary}</p>
+                        
+                        <div style="display: flex; flex-direction: column; gap: 15px;">
+                            <button class="form-button export" onclick="shareViaWhatsApp('${encodeURIComponent(summary)}', '${filename}')" style="margin: 0;">
+                                📱 Share via WhatsApp
+                            </button>
+                            <button class="form-button view" onclick="shareViaEmail('${encodeURIComponent(summary)}', '${filename}')" style="margin: 0;">
+                                📧 Share via Email
+                            </button>
+                            <button class="form-button export-safety" onclick="downloadFile('${url}', '${filename}')" style="margin: 0;">
+                                📥 Download File
+                            </button>
+                            <button class="form-button danger" onclick="closeShareModal(this.closest('[onclick*=closeShareModal]'))" style="margin: 0;">
+                                ❌ Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+            
+            // Store the blob URL for download
+            window.tempCSVUrl = url;
+            window.tempCSVFilename = filename;
+        }
+        
+        function shareViaWhatsApp(summary, filename) {
+            const message = `${decodeURIComponent(summary)}\n\nFile: ${filename}\n\nSent from Labour Inspection Mobile App`;
+            const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
+            
+            // Open WhatsApp
+            window.open(whatsappUrl, '_blank');
+            
+            // Also download the file so user can manually attach it
+            if (window.tempCSVUrl) {
+                downloadFile(window.tempCSVUrl, window.tempCSVFilename);
+            }
+            
+            alert('📱 WhatsApp opened with message.\n📎 CSV file downloaded - attach it to your WhatsApp message.');
+        }
+        
+        function shareViaEmail(summary, filename) {
+            const subject = 'Labour Inspection Data Export';
+            const body = `${decodeURIComponent(summary)}\n\nPlease find the attached CSV file containing the inspection data.\n\nFile: ${filename}\n\nSent from Labour Inspection Mobile App`;
+            const mailtoUrl = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            
+            // Open email app
+            window.open(mailtoUrl, '_blank');
+            
+            // Also download the file so user can manually attach it
+            if (window.tempCSVUrl) {
+                downloadFile(window.tempCSVUrl, window.tempCSVFilename);
+            }
+            
+            alert('📧 Email app opened with message.\n📎 CSV file downloaded - attach it to your email.');
+        }
+        
+        function downloadFile(url, filename) {
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+        
+        function closeShareModal(modal) {
+            if (window.tempCSVUrl) {
+                window.URL.revokeObjectURL(window.tempCSVUrl);
+                delete window.tempCSVUrl;
+                delete window.tempCSVFilename;
+            }
+            modal.remove();
+        }
+        
+        function closeShareOptionsModal(modal) {
+            modal.remove();
+        }
+        
+        function confirmClearAll() {
+            const labourForms = JSON.parse(localStorage.getItem('labour_inspections') || '[]');
+            const safetyForms = JSON.parse(localStorage.getItem('safety_inspections') || '[]');
+            const totalForms = labourForms.length + safetyForms.length;
+            
+            if (totalForms === 0) {
+                alert('No data to clear.');
+                return;
+            }
+            
+            if (confirm(`⚠️ Are you sure you want to delete ALL inspection data?\n\nThis will permanently remove:\n• ${labourForms.length} Labour inspection forms\n• ${safetyForms.length} Safety inspection forms\n\nTotal: ${totalForms} forms\n\nThis action cannot be undone!`)) {
+                if (confirm('🚨 FINAL WARNING: This will delete everything!\n\nClick OK to proceed or Cancel to keep your data.')) {
+                    localStorage.removeItem('labour_inspections');
+                    localStorage.removeItem('safety_inspections');
+                    localStorage.removeItem('last_export_date');
+                    localStorage.removeItem('labour_form_autosave');
+                    localStorage.removeItem('safety_form_autosave');
+                    
+                    updateStats();
+                    alert('✅ All inspection data has been cleared.');
+                }
+            }
+        }
+        
+        // Update stats on page load
+        document.addEventListener('DOMContentLoaded', updateStats);
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('savedFormsModal');
+            if (event.target === modal) {
+                closeSavedFormsModal();
+            }
+        }
+        
+        // Handle visibility change to update stats when returning to page
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                updateStats();
+            }
+        });
+    </script>
+</body>
+</html>
